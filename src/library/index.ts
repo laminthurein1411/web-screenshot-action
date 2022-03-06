@@ -2,4 +2,5 @@
 //  LIBRARY
 //  =======
 
-export * from './config'
+export * as config from './config'
+export * from './artifacts'
