@@ -1,5 +1,8 @@
 //  Library
 import * as core from '@actions/core'
+import { captureScreenshot } from './captureScreenshot'
+import { url, name } from './library'
+
 
 //  ====
 //  MAIN
@@ -7,7 +10,7 @@ import * as core from '@actions/core'
 
 async function run() {
     try {
-        // await capture()
+        await captureScreenshot(url, name)
     } catch (err) {
         let error = err as Error
         core.setFailed(error.message)
