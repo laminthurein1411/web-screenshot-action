@@ -1,8 +1,7 @@
 //  Library
 import * as core from '@actions/core'
 import { captureScreenshot } from './captureScreenshot'
-import { url, name } from './library'
-
+import { config, createArtifacts } from './library'
 
 //  ====
 //  MAIN
@@ -10,7 +9,11 @@ import { url, name } from './library'
 
 async function run() {
     try {
-        await captureScreenshot(url, name)
+        await captureScreenshot(config.url, config.name)
+
+        if (config.createArtifacts) {
+            createArtifacts(config.name, [`./${config.name}.png`])
+        }
     } catch (err) {
         let error = err as Error
         core.setFailed(error.message)
