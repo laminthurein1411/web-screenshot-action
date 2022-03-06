@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Shresht7/capture-screenshot-actions#README",
   "devDependencies": {
+    "@types/node": "^17.0.21",
     "@vercel/ncc": "^0.33.3",
     "typescript": "^4.6.2"
   },
