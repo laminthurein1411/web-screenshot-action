@@ -1,0 +1,48 @@
+# ===========================================
+#                 SCREENSHOT
+# -------------------------------------------
+# Take screenshot of any given website
+# ===========================================
+
+name: Screenshot
+
+# Activation Events
+# =================
+
+on:
+  workflow_dispatch:  # When a workflow event is dispatched manually
+
+# Jobs
+# ====
+
+jobs:
+  Screenshot:
+    runs-on: ubuntu-latest
+    
+    name: Screenshot
+    steps:
+    
+      # Actions/Checkout
+      # ================
+
+      # Required for GITHUB_WORKSPACE
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Screenshot
+        uses: Shresht7/capture-screenshot-action@artifacts
+        id: Screenshot
+
+        # Config Parameters
+        # -----------------
+
+        with:
+          url: https://www.github.com/Shresht7/capture-screenshot-actions
+          name: screenshot
+
+
+        # Environment Variables
+        # ---------------------
+
+        env:
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }} # Personal-Access-Token with gist permissions.
