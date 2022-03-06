@@ -178,7 +178,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 //  Library
 const core = __importStar(__nccwpck_require__(2186));
-const artifact = __importStar(__nccwpck_require__(2605));
 const captureScreenshot_1 = __nccwpck_require__(8937);
 const library_1 = __nccwpck_require__(2172);
 //  ====
@@ -187,11 +186,10 @@ const library_1 = __nccwpck_require__(2172);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield (0, captureScreenshot_1.captureScreenshot)(library_1.url, library_1.name);
-            const client = artifact.create();
-            const artifactName = library_1.name;
-            const upload = yield client.uploadArtifact(artifactName, [`./${library_1.name}.png`], './');
-            core.setOutput('path', `./${library_1.name}.png`);
+            yield (0, captureScreenshot_1.captureScreenshot)(library_1.config.url, library_1.config.name);
+            if (library_1.config.createArtifacts) {
+                (0, library_1.createArtifacts)(library_1.config.name, [`./${library_1.config.name}.png`]);
+            }
         }
         catch (err) {
             let error = err;
@@ -200,6 +198,47 @@ function run() {
     });
 }
 run();
+
+
+/***/ }),
+
+/***/ 1764:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.createArtifacts = void 0;
+//  Library
+const artifact = __importStar(__nccwpck_require__(2605));
+function createArtifacts(name, files, rootDir = './', options) {
+    const client = artifact.create();
+    return client.uploadArtifact(name, files, rootDir, options);
+}
+exports.createArtifacts = createArtifacts;
 
 
 /***/ }),
@@ -233,7 +272,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.name = exports.url = void 0;
+exports.createArtifacts = exports.name = exports.url = void 0;
 //  Library
 const core = __importStar(__nccwpck_require__(2186));
 //  ======
@@ -241,6 +280,7 @@ const core = __importStar(__nccwpck_require__(2186));
 //  ======
 exports.url = core.getInput('url', { required: true });
 exports.name = core.getInput('name') || 'screenshot.png';
+exports.createArtifacts = core.getBooleanInput('createArtifacts');
 
 
 /***/ }),
@@ -264,11 +304,25 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
 }));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__nccwpck_require__(8562), exports);
+exports.config = void 0;
+exports.config = __importStar(__nccwpck_require__(8562));
+__exportStar(__nccwpck_require__(1764), exports);
 
 
 /***/ }),
@@ -600,7 +654,7 @@ const status_reporter_1 = __nccwpck_require__(9081);
 const perf_hooks_1 = __nccwpck_require__(4074);
 const http_manager_1 = __nccwpck_require__(6527);
 const config_variables_1 = __nccwpck_require__(2222);
-const requestUtils_1 = __nccwpck_require__(755);
+const requestUtils_1 = __nccwpck_require__(9746);
 class DownloadHttpClient {
     constructor() {
         this.downloadHttpManager = new http_manager_1.HttpManager(config_variables_1.getDownloadFileConcurrency(), '@actions/artifact-download');
@@ -1042,7 +1096,7 @@ exports.checkArtifactFilePath = checkArtifactFilePath;
 
 /***/ }),
 
-/***/ 755:
+/***/ 9746:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -1372,7 +1426,7 @@ const status_reporter_1 = __nccwpck_require__(9081);
 const http_client_1 = __nccwpck_require__(9925);
 const http_manager_1 = __nccwpck_require__(6527);
 const upload_gzip_1 = __nccwpck_require__(606);
-const requestUtils_1 = __nccwpck_require__(755);
+const requestUtils_1 = __nccwpck_require__(9746);
 const stat = util_1.promisify(fs.stat);
 class UploadHttpClient {
     constructor() {
@@ -12749,7 +12803,7 @@ exports.ariaHandler = {
 
 /***/ }),
 
-/***/ 8857:
+/***/ 755:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -13371,7 +13425,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.connectToBrowser = void 0;
-const Browser_js_1 = __nccwpck_require__(8857);
+const Browser_js_1 = __nccwpck_require__(755);
 const assert_js_1 = __nccwpck_require__(2279);
 const helper_js_1 = __nccwpck_require__(6493);
 const Connection_js_1 = __nccwpck_require__(9504);
@@ -26518,7 +26572,7 @@ const path = __importStar(__nccwpck_require__(1017));
 const fs = __importStar(__nccwpck_require__(7147));
 const assert_js_1 = __nccwpck_require__(2279);
 const BrowserFetcher_js_1 = __nccwpck_require__(6774);
-const Browser_js_1 = __nccwpck_require__(8857);
+const Browser_js_1 = __nccwpck_require__(755);
 const BrowserRunner_js_1 = __nccwpck_require__(6406);
 const util_1 = __nccwpck_require__(3837);
 const copyFileAsync = (0, util_1.promisify)(fs.copyFile);
