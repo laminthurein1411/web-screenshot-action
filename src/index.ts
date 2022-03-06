@@ -13,7 +13,7 @@ async function run() {
     try {
         await captureScreenshot(url, name)
         const client = artifact.create()
-        const artifactName = name.substring(0, name.lastIndexOf('.'))
+        const artifactName = name
         const upload = await client.uploadArtifact(artifactName, [`./${name}.png`], './')
 
         core.setOutput('path', `./${name}.png`)

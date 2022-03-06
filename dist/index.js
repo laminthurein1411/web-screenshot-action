@@ -189,7 +189,7 @@ function run() {
         try {
             yield (0, captureScreenshot_1.captureScreenshot)(library_1.url, library_1.name);
             const client = artifact.create();
-            const artifactName = library_1.name.substring(0, library_1.name.lastIndexOf('.'));
+            const artifactName = library_1.name;
             const upload = yield client.uploadArtifact(artifactName, [`./${library_1.name}.png`], './');
             core.setOutput('path', `./${library_1.name}.png`);
         }
