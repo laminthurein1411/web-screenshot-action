@@ -1,6 +1,9 @@
 //  Library
 import * as core from '@actions/core'
 
+//  Type Definitions
+import type { screenshotFileType } from '../types'
+
 //  ======
 //  CONFIG
 //  ======
@@ -17,6 +20,9 @@ export const captureFullPage = core.getBooleanInput('captureFullPage')
 
 /** Screenshot fileName */
 export const name: string = core.getInput('name')
+
+/** Screenshot fileType */
+export const type: screenshotFileType = core.getInput('type') as screenshotFileType
 
 /** Boolean flag to determine if the action generates artifacts */
 export const shouldCreateArtifacts: boolean = core.getBooleanInput('createArtifacts')

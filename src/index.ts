@@ -11,10 +11,10 @@ import { config, createArtifacts } from './library'
 async function action() {
 
     //  Get config parameters
-    const { url, name, width, height, shouldCreateArtifacts } = config
+    const { url, name, type, width, height, shouldCreateArtifacts } = config
 
     //  Capture screenshot of the given web url
-    await captureScreenshot(url, name, { width, height })
+    await captureScreenshot(url, name, { type, width, height })
 
     //  Generate artifacts
     if (shouldCreateArtifacts) {

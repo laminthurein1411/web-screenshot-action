@@ -23,30 +23,34 @@ inputs:
   # ---
 
   url:
-    description: 'URL to take the screenshot of. [Required String]'
+    description: 'URL to take the screenshot of. [Required string]'
     required: true
 
   # Dimensions
   # ----------
 
   width:
-    description: 'Viewport width. [Number] (default: 1920)'
+    description: 'Viewport width. [number] (default: 1920)'
     default: 1920
 
   height:
-    description: 'Viewport height. [Number] (default: 1080)'
+    description: 'Viewport height. [number] (default: 1080)'
     default: 1080
 
   captureFullPage:
-    description: 'Should take screenshot of the entire page. [Boolean] (default: false)'
+    description: 'Should take screenshot of the entire page. [boolean] (default: false)'
     default: false
 
-  # File Name
-  # ---------
+  # Image File
+  # ----------
 
   name:
-    description: 'Screenshot filename. [String] (default: screenshot)'
+    description: 'Screenshot filename. [string] (default: screenshot)'
     default: 'screenshot'
+
+  type:
+    description: 'Image file-type. [png, jpeg, webp] (default: png)'
+    default: 'png'
 
   # Should Create Artifacts
   # -----------------------
