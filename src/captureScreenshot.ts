@@ -6,7 +6,8 @@ import { getChromePath } from './helpers'
 
 type captureOptions = {
     width?: number,
-    height?: number
+    height?: number,
+    captureFullPage?: boolean
 }
 
 /** Capture screenshot of the given URL */
@@ -15,6 +16,7 @@ export async function captureScreenshot(url: string, name: string, options?: cap
     //  Get options
     const width = options?.width || 1920
     const height = options?.height || 1080
+    const fullPage = options?.captureFullPage || false
 
     //  Launch browser with the provided settings
     const browser = await puppeteer.launch({
@@ -30,7 +32,8 @@ export async function captureScreenshot(url: string, name: string, options?: cap
 
     //  Take screenshot of the webpage and save it as a PNG
     await page.screenshot({
-        path: `${process.env.GITHUB_WORKSPACE}/${name}.png`
+        fullPage,
+        path: `${process.env.GITHUB_WORKSPACE}/${name}.png`,
     })
 
     //  Close the browser

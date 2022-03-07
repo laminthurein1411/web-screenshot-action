@@ -12,6 +12,8 @@ export const url: string = core.getInput('url', { required: true })
 export const width: number = parseInt(core.getInput('width'))
 /** Screenshot height */
 export const height: number = parseInt(core.getInput('height'))
+/** Should take screenshot of the entire page */
+export const captureFullPage = core.getBooleanInput('captureFullPage')
 
 /** Screenshot fileName */
 export const name: string = core.getInput('name')
