@@ -1,5 +1,5 @@
 //  Types
-import { screenshotFileType } from '../types'
+import type { ScreenshotOptions } from 'puppeteer-core'
 
 /** Returns the file-path with extension */
-export const getFilePath = (name: string, type: screenshotFileType) => `${name}.${type}`
+export const getFilePath = (name: string, type: ScreenshotOptions['type']) => `${name}.${type}`

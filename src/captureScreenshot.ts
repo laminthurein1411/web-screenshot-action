@@ -5,13 +5,13 @@ import puppeteer from 'puppeteer-core'
 import { getChromePath, getFilePath } from './helpers'
 
 //  Types
-import type { screenshotFileType } from './types'
+import type { ScreenshotOptions } from 'puppeteer-core'
 
 type captureOptions = {
     width?: number,
     height?: number,
     captureFullPage?: boolean,
-    type?: screenshotFileType
+    type?: ScreenshotOptions['type']
 }
 
 /** Capture screenshot of the given URL */
