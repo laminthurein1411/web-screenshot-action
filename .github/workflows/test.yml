@@ -1,4 +1,11 @@
-name: 'build-test'
+# ==============
+# BUILD AND TEST
+# ==============
+
+name: Build-Test
+
+# Activation Events
+# =================
 
 on: # rebuild any PRs and main branch changes
   pull_request:
@@ -6,6 +13,9 @@ on: # rebuild any PRs and main branch changes
     branches:
       - main
       - 'releases/*'
+
+# Jobs
+# ====
 
 jobs:
   build: # make sure build/ci work properly
