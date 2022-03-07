@@ -36,7 +36,7 @@ jobs:
         uses: Shresht7/web-screenshot-action@main
         id: Screenshot
         with:
-          url: https://www.github.com/Shresht7/web-screenshot-actions
+          url: https://www.github.com/Shresht7/web-screenshot-action
           name: screenshot
 
       # Push to main 🌐
@@ -44,8 +44,8 @@ jobs:
 
       - name: Commit
         run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'github-actions@github.com'
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
           git add .
           git commit -m 'Update screenshot 📷'
           git push
