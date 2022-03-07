@@ -30,14 +30,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Screenshot
-        uses: Shresht7/capture-screenshot-action@artifacts
+        uses: Shresht7/web-screenshot-action@artifacts
         id: Screenshot
 
         # Config Parameters
         # -----------------
 
         with:
-          url: https://www.github.com/Shresht7/capture-screenshot-actions
+          url: https://www.github.com/Shresht7/web-screenshot-actions
           name: screenshot
 
 

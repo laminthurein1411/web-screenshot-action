@@ -1,5 +1,5 @@
 {
-  "name": "capture-screenshot-action",
+  "name": "web-screenshot-action",
   "version": "1.0.0",
   "description": "GitHub Action to take screenshots of a website",
   "main": "dist/index.js",
@@ -12,12 +12,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Shresht7/capture-screenshot-action.git"
+    "url": "git+https://github.com/Shresht7/web-screenshot-action.git"
   },
   "bugs": {
-    "url": "https://github.com/Shresht7/capture-screenshot-actions/issues"
+    "url": "https://github.com/Shresht7/web-screenshot-action/issues"
   },
-  "homepage": "https://github.com/Shresht7/capture-screenshot-actions#README",
+  "homepage": "https://github.com/Shresht7/web-screenshot-action#README",
   "devDependencies": {
     "@types/node": "^17.0.21",
     "@vercel/ncc": "^0.33.3",
