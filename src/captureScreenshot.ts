@@ -2,7 +2,7 @@
 import puppeteer from 'puppeteer-core'
 
 //  Helpers
-import { getChromiumPath } from './helpers'
+import { getChromePath } from './helpers'
 
 type captureOptions = {
     width?: number,
@@ -15,7 +15,7 @@ export async function captureScreenshot(url: string, name: string, options?: cap
     const height = options?.height || 1080
 
     const browser = await puppeteer.launch({
-        executablePath: getChromiumPath(),
+        executablePath: getChromePath(),
         defaultViewport: { height, width }
     })
 

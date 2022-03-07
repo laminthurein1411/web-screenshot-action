@@ -2,4 +2,4 @@
 //  HELPERS
 //  =======
 
-export * from './getChromiumPath'
+export * from './getChromePath'
