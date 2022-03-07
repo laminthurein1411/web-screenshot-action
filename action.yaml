@@ -44,9 +44,9 @@ inputs:
     description: 'Screenshot filename'
     default: 'screenshot.png'
 
-  # Create Artifacts
-  # ----------------
+  # Should Create Artifacts
+  # -----------------------
 
-  createArtifacts:
-    description: 'Generate screenshot artifacts [Boolean] (default: false)'
+  shouldCreateArtifacts:
+    description: 'Should generate screenshot artifacts [Boolean] (default: false)'
     default: false

@@ -17,4 +17,4 @@ export const height: number = parseInt(core.getInput('height'))
 export const name: string = core.getInput('name')
 
 /** Boolean flag to determine if the action generates artifacts */
-export const createArtifacts: boolean = core.getBooleanInput('createArtifacts')
+export const shouldCreateArtifacts: boolean = core.getBooleanInput('createArtifacts')
