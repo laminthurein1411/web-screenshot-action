@@ -3,6 +3,8 @@
 
 GitHub Action to take a screenshot of a website.
 
+![Example-Screenshot](./screenshot.png)
+
 ## Usage
 
 ```yaml

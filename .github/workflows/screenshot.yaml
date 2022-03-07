@@ -1,8 +1,8 @@
-# ===========================================
-#                 SCREENSHOT
-# -------------------------------------------
-# Take screenshot of any given website
-# ===========================================
+# ============================
+#         SCREENSHOT
+# ----------------------------
+# Take screenshot of a website
+# ============================
 
 name: Screenshot
 
@@ -22,16 +22,30 @@ jobs:
     name: Screenshot
     steps:
     
-      # Actions/Checkout
-      # ================
+      # Actions/Checkout ✅
+      # ===================
 
       # Required for GITHUB_WORKSPACE
       - name: Checkout
         uses: actions/checkout@v2
 
+      # Take Screenshot 📷
+      # ==================
+
       - name: Screenshot
-        uses: Shresht7/web-screenshot-action@artifacts
+        uses: Shresht7/web-screenshot-action@main
         id: Screenshot
+
+      # Push to main 🌐
+      # ===============
+
+      - name: Commit
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'github-actions@github.com'
+          git add .
+          git commit -m 'Update screenshot 📷'
+          git push
 
         # Config Parameters
         # -----------------
@@ -39,10 +53,3 @@ jobs:
         with:
           url: https://www.github.com/Shresht7/web-screenshot-actions
           name: screenshot
-
-
-        # Environment Variables
-        # ---------------------
-
-        env:
-          GIST_TOKEN: ${{ secrets.GIST_TOKEN }} # Personal-Access-Token with gist permissions.
