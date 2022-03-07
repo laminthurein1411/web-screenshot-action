@@ -27,6 +27,6 @@
   "dependencies": {
     "@actions/artifact": "^1.0.0",
     "@actions/core": "^1.6.0",
-    "puppeteer-core": "^13.4.1"
+    "puppeteer-core": "^13.5.0"
   }
 }
