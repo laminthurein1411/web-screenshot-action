@@ -39,7 +39,7 @@ jobs:
           url: https://www.github.com/Shresht7/web-screenshot-action
           name: screenshot
 
-      # Push to main 🌐
+      # Push to Main 🌐
       # ===============
 
       - name: Commit
