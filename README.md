@@ -16,24 +16,79 @@ GitHub Action to take a screenshot of a website.
 
 ### Inputs
 
+| Input                   | Type                    | Description                                                     |
+| ----------------------- | ----------------------- | --------------------------------------------------------------- |
+| `url`                   | `string`                | URL to take the screenshot of. (**required**)                   |
+| `width`                 | `number`                | Viewport width. (_default_: `1920`)                             |
+| `height`                | `number`                | Viewport height. (_default_: `1080`)                            |
+| `captureFullPage`       | `boolean`               | Should take screenshot of the entire page. (_default_: `false`) |
+| `name`                  | `string`                | Screenshot filename. (_default_: `screenshot`)                  |
+| `type`                  | `'png', 'jpeg', 'webp'` | Image filetype (_default_: `png`)                               |
+| `shouldCreateArtifacts` | `boolean`               | Should generate screenshot artifacts. (_default_: `false`)      |
+
 ### Outputs
 
+if `shouldCreateArtifacts` is set to `true`, an [artifact](https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts) will be created with the generated screenshot.
 
 ## Workflow Setup
 
-Intended to be a sub-task in some other workflow.
+Intended to be used as a sub-task in some other workflow. This action's only job is to generate the screenshots. What you do with them is up to you.
 
-## Example
+### Example
 
-### Example Workflow
+The [screenshot](#-web-screenshot-action) in this README is auto-generated using this action!
 
-Create `screenshot.yaml` in `./github/workflows` folder.
+[`.github/workflows/screenshot.yml`](./.github/workflows/screenshot.yml):
 
 ```yaml
-on:
-  push:
-  ...
-  # TODO: Complete Workflow File
-```
+# ============================
+#         SCREENSHOT
+# ----------------------------
+# Take screenshot of a website
+# ============================
 
-## Permissions
+name: Screenshot
+
+# Activation Events
+# =================
+
+on:
+  workflow_dispatch:  # When a workflow event is dispatched manually
+
+# Jobs
+# ====
+
+jobs:
+  Screenshot:
+    runs-on: ubuntu-latest
+    
+    name: Screenshot
+    steps:
+    
+      # Actions/Checkout ✅
+      # ===================
+
+      # Required for GITHUB_WORKSPACE
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Take Screenshot 📷
+      # ==================
+
+      - name: Screenshot
+        uses: Shresht7/web-screenshot-action@main
+        id: Screenshot
+        with:
+          url: https://www.github.com/Shresht7/web-screenshot-action
+
+      # Push to Main 🌐
+      # ===============
+
+      - name: Commit
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          git add .
+          git commit -m 'Update screenshot 📷'
+          git push
+```
