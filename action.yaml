@@ -42,7 +42,7 @@ inputs:
 
   name:
     description: 'Screenshot filename'
-    default: 'screenshot.png'
+    default: 'screenshot'
 
   # Should Create Artifacts
   # -----------------------
