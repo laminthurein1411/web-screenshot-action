@@ -28,11 +28,11 @@ GitHub Action to take a screenshot of a website.
 
 ### Outputs
 
-if `shouldCreateArtifacts` is set to `true`, an [artifact](https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts) will be created with the generated screenshot.
+if `shouldCreateArtifacts` is set to `true`, an [artifact](https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts) will be created with the screenshot.
 
 ## Workflow Setup
 
-Intended to be used as a sub-task in some other workflow. This action's only job is to generate the screenshots. What you do with them is up to you.
+Intended to be used as a sub-task in some other workflow, this action's only job is to generate the screenshots. What you do with them is up to you.
 
 ### Example
 
