@@ -25,4 +25,4 @@ export const name: string = core.getInput('name')
 export const type: ScreenshotOptions['type'] = core.getInput('type') as ScreenshotOptions['type']
 
 /** Boolean flag to determine if the action generates artifacts */
-export const shouldCreateArtifacts: boolean = core.getBooleanInput('createArtifacts')
+export const shouldCreateArtifacts: boolean = core.getBooleanInput('shouldCreateArtifacts')

@@ -56,5 +56,5 @@ inputs:
   # -----------------------
 
   shouldCreateArtifacts:
-    description: 'Should generate screenshot artifacts. [Boolean] (default: false)'
+    description: 'Should generate screenshot artifacts. [boolean] (default: false)'
     default: false
