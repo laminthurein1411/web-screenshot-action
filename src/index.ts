@@ -2,6 +2,7 @@
 import * as core from '@actions/core'
 import { captureScreenshot } from './captureScreenshot'
 import { config, createArtifacts } from './library'
+import { getFilePath } from './helpers'
 
 //  ====
 //  MAIN
@@ -18,7 +19,7 @@ async function action() {
 
     //  Generate artifacts
     if (shouldCreateArtifacts) {
-        createArtifacts(name, [`./${name}.png`])
+        createArtifacts(name, [`./${getFilePath(name, type)}`])
     }
 
 }

@@ -2,7 +2,7 @@
 import puppeteer from 'puppeteer-core'
 
 //  Helpers
-import { getChromePath } from './helpers'
+import { getChromePath, getFilePath } from './helpers'
 
 //  Types
 import type { screenshotFileType } from './types'
@@ -39,7 +39,7 @@ export async function captureScreenshot(url: string, name: string, options?: cap
     await page.screenshot({
         fullPage,
         type,
-        path: `${process.env.GITHUB_WORKSPACE}/${name}.png`,
+        path: `${process.env.GITHUB_WORKSPACE}/${getFilePath(name, type)}`,
     })
 
     //  Close the browser
