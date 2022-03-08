@@ -25,7 +25,7 @@ GitHub Action to take a screenshot of a website.
 | `name`                  | `string`                | Screenshot filename. (_default_: `screenshot`)                          |
 | `type`                  | `'png', 'jpeg', 'webp'` | Image filetype (_default_: `png`)                                       |
 | `shouldCreateArtifacts` | `boolean`               | Should generate screenshot artifacts. (_default_: `false`)              |
-| `timeout`               | `number`                | Should wait x milliseconds before taking screenshot (_default_: `1000`) |
+| `delay`                 | `number`                | Should wait x milliseconds before taking screenshot (_default_: `1000`) |
 
 ### Outputs
 

@@ -12,7 +12,7 @@ type captureOptions = {
     height?: number,
     captureFullPage?: boolean,
     type?: ScreenshotOptions['type'],
-    timeout?: number
+    delay?: number
 }
 
 /** Capture screenshot of the given URL */
@@ -23,7 +23,7 @@ export async function captureScreenshot(url: string, name: string, options?: cap
     const height = options?.height || 1080
     const fullPage = options?.captureFullPage || false
     const type = options?.type || 'png'
-    const timeout = options?.timeout || 1000
+    const duration = options?.delay || 1000
 
     //  Launch browser with the provided settings
     const browser = await puppeteer.launch({
@@ -38,7 +38,7 @@ export async function captureScreenshot(url: string, name: string, options?: cap
     })
 
     //  Wait for some time before proceeding. Gives the page some breathing room to load properly
-    await delay(timeout)
+    await delay(duration)
 
     //  Take screenshot of the webpage and save it as a PNG
     await page.screenshot({
