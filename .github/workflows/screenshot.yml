@@ -33,7 +33,7 @@ jobs:
       # ==================
 
       - name: Screenshot
-        uses: Shresht7/web-screenshot-action@main
+        uses: Shresht7/web-screenshot-action@issue3
         id: screenshot
         with:
           url: https://www.github.com/Shresht7/web-screenshot-action
