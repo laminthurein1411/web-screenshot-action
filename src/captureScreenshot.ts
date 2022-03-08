@@ -2,7 +2,7 @@
 import puppeteer from 'puppeteer-core'
 
 //  Helpers
-import { getChromePath, getFilePath } from './helpers'
+import { getChromePath, getFilePath, delay } from './helpers'
 
 //  Types
 import type { ScreenshotOptions } from 'puppeteer-core'
@@ -34,9 +34,11 @@ export async function captureScreenshot(url: string, name: string, options?: cap
     //  Navigate to the given URL
     const page = await browser.newPage()
     await page.goto(url, {
-        timeout,
         waitUntil: 'networkidle2'
     })
+
+    //  Wait for some time before proceeding. Gives the page some breathing room to load properly
+    await delay(timeout)
 
     //  Take screenshot of the webpage and save it as a PNG
     await page.screenshot({
