@@ -45,7 +45,7 @@ export async function captureScreenshot(url: string, name: string, options?: typ
 
     //  Create sub-directory if it doesn't exist
     if (!fs.existsSync(path.dirname(name))) {
-        io.mkdirP(path.dirname(name))
+        await io.mkdirP(path.dirname(name))
     }
 
     //  Take screenshot of the webpage and save it as a PNG
