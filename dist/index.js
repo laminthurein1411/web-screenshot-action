@@ -80,6 +80,7 @@ function captureScreenshot(url, name, options) {
         yield (0, helpers_1.delay)(duration);
         //  Create sub-directory if it doesn't exist
         if (!fs.existsSync(path.dirname(name))) {
+            console.log(path.dirname(name));
             yield io.mkdirP(path.dirname(name));
         }
         //  Take screenshot of the webpage and save it as a PNG
