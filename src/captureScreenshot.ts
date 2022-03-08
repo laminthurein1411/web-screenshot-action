@@ -44,8 +44,8 @@ export async function captureScreenshot(url: string, name: string, options?: typ
     await delay(duration)
 
     //  Create sub-directory if it doesn't exist
+    console.log(path.dirname(name))
     if (!fs.existsSync(path.dirname(name))) {
-        console.log(path.dirname(name))
         await io.mkdirP(path.dirname(name))
     }
 

@@ -79,8 +79,8 @@ function captureScreenshot(url, name, options) {
         //  Wait for some time before proceeding. Gives the page some breathing room to load properly
         yield (0, helpers_1.delay)(duration);
         //  Create sub-directory if it doesn't exist
+        console.log(path.dirname(name));
         if (!fs.existsSync(path.dirname(name))) {
-            console.log(path.dirname(name));
             yield io.mkdirP(path.dirname(name));
         }
         //  Take screenshot of the webpage and save it as a PNG
