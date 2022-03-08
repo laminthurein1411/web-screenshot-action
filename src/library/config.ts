@@ -26,3 +26,6 @@ export const type: ScreenshotOptions['type'] = core.getInput('type') as Screensh
 
 /** Boolean flag to determine if the action generates artifacts */
 export const shouldCreateArtifacts: boolean = core.getBooleanInput('shouldCreateArtifacts')
+
+/** Time to wait before taking screenshot */
+export const timeout: number = +core.getInput('timeout')

@@ -12,10 +12,10 @@ import { getFilePath } from './helpers'
 async function action() {
 
     //  Get config parameters
-    const { url, name, type, width, height, shouldCreateArtifacts } = config
+    const { url, name, type, shouldCreateArtifacts } = config
 
     //  Capture screenshot of the given web url
-    await captureScreenshot(url, name, { type, width, height })
+    await captureScreenshot(url, name, config)
 
     //  Generate artifacts
     if (shouldCreateArtifacts) {
