@@ -23,7 +23,6 @@ GitHub Action to take a screenshot of a website.
 | `height`                | `number`                | Viewport height. (_default_: `1080`)                                                                     |
 | `captureFullPage`       | `boolean`               | Should take screenshot of the entire page. (_default_: `false`)                                          |
 | `name`                  | `string`                | Screenshot filename. (_default_: `screenshot`)                                                           |
-| `dir`                   | `string`                | Screenshot directory. (_default_: `./`)                                                                  |
 | `type`                  | `'png', 'jpeg', 'webp'` | Image filetype (_default_: `png`)                                                                        |
 | `shouldCreateArtifacts` | `boolean`               | Should generate screenshot artifacts. (_default_: `false`)                                               |
 | `delay`                 | `number`                | Should wait x milliseconds before taking screenshot (_default_: `1000`)                                  |
