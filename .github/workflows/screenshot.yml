@@ -37,13 +37,14 @@ jobs:
         id: screenshot
         with:
           url: https://www.github.com/Shresht7/web-screenshot-action
+          name: screenshots/screenshot
 
       - name: Screenshot-Dark
         uses: Shresht7/web-screenshot-action@main
         id: screenshot-dark
         with:
           url: https://www.github.com/Shresht7/web-screenshot-action
-          name: screenshot-dark
+          name: screenshots/screenshot-dark
           darkMode: true
 
       # Push to Main 🌐
