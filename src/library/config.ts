@@ -29,3 +29,6 @@ export const shouldCreateArtifacts: boolean = core.getBooleanInput('shouldCreate
 
 /** Time to wait before taking screenshot */
 export const delay: number = +core.getInput('delay')
+
+/** Prefers Dark Color Scheme */
+export const darkMode: boolean = core.getBooleanInput('darkMode')

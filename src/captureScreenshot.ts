@@ -5,18 +5,10 @@ import puppeteer from 'puppeteer-core'
 import { getChromePath, getFilePath, delay } from './helpers'
 
 //  Types
-import type { ScreenshotOptions } from 'puppeteer-core'
-
-type captureOptions = {
-    width?: number,
-    height?: number,
-    captureFullPage?: boolean,
-    type?: ScreenshotOptions['type'],
-    delay?: number
-}
+import type { config } from './library'
 
 /** Capture screenshot of the given URL */
-export async function captureScreenshot(url: string, name: string, options?: captureOptions) {
+export async function captureScreenshot(url: string, name: string, options?: typeof config) {
 
     //  Get options
     const width = options?.width || 1920
@@ -24,6 +16,7 @@ export async function captureScreenshot(url: string, name: string, options?: cap
     const fullPage = options?.captureFullPage || false
     const type = options?.type || 'png'
     const duration = options?.delay || 1000
+    const darkMode = options?.darkMode || false
 
     //  Launch browser with the provided settings
     const browser = await puppeteer.launch({
@@ -36,6 +29,13 @@ export async function captureScreenshot(url: string, name: string, options?: cap
     await page.goto(url, {
         waitUntil: 'networkidle2'
     })
+
+    //  Enable dark-mode if needed
+    if (darkMode) {
+        page.emulateMediaFeatures([
+            { name: 'prefers-color-scheme', value: 'dark' }
+        ])
+    }
 
     //  Wait for some time before proceeding. Gives the page some breathing room to load properly
     await delay(duration)

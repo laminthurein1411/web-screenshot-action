@@ -33,6 +33,7 @@ function captureScreenshot(url, name, options) {
         const fullPage = (options === null || options === void 0 ? void 0 : options.captureFullPage) || false;
         const type = (options === null || options === void 0 ? void 0 : options.type) || 'png';
         const duration = (options === null || options === void 0 ? void 0 : options.delay) || 1000;
+        const darkMode = (options === null || options === void 0 ? void 0 : options.darkMode) || false;
         //  Launch browser with the provided settings
         const browser = yield puppeteer_core_1.default.launch({
             executablePath: (0, helpers_1.getChromePath)(),
@@ -43,6 +44,12 @@ function captureScreenshot(url, name, options) {
         yield page.goto(url, {
             waitUntil: 'networkidle2'
         });
+        //  Enable dark-mode if needed
+        if (darkMode) {
+            page.emulateMediaFeatures([
+                { name: 'prefers-color-scheme', value: 'dark' }
+            ]);
+        }
         //  Wait for some time before proceeding. Gives the page some breathing room to load properly
         yield (0, helpers_1.delay)(duration);
         //  Take screenshot of the webpage and save it as a PNG
@@ -335,7 +342,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.delay = exports.shouldCreateArtifacts = exports.type = exports.name = exports.captureFullPage = exports.height = exports.width = exports.url = void 0;
+exports.darkMode = exports.delay = exports.shouldCreateArtifacts = exports.type = exports.name = exports.captureFullPage = exports.height = exports.width = exports.url = void 0;
 //  Library
 const core = __importStar(__nccwpck_require__(2186));
 //  ======
@@ -357,6 +364,8 @@ exports.type = core.getInput('type');
 exports.shouldCreateArtifacts = core.getBooleanInput('shouldCreateArtifacts');
 /** Time to wait before taking screenshot */
 exports.delay = +core.getInput('delay');
+/** Prefers Dark Color Scheme */
+exports.darkMode = core.getBooleanInput('darkMode');
 
 
 /***/ }),
