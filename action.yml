@@ -48,6 +48,10 @@ inputs:
     description: 'Screenshot filename. [string] (default: screenshot)'
     default: 'screenshot'
 
+  dir:
+    description: 'Screenshot directory. [string] (default: './')'
+    default: ''
+
   type:
     description: 'Image file-type. [png, jpeg, webp] (default: png)'
     default: 'png'

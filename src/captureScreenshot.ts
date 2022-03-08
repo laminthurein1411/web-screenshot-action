@@ -1,5 +1,8 @@
 //  Library
 import puppeteer from 'puppeteer-core'
+import * as fs from 'node:fs'
+import * as path from 'node:path'
+import * as io from '@actions/io'
 
 //  Helpers
 import { getChromePath, getFilePath, delay } from './helpers'
@@ -39,6 +42,11 @@ export async function captureScreenshot(url: string, name: string, options?: typ
 
     //  Wait for some time before proceeding. Gives the page some breathing room to load properly
     await delay(duration)
+
+    //  Create sub-directory if it doesn't exist
+    if (!fs.existsSync(path.dirname(name))) {
+        io.mkdirP(path.dirname(name))
+    }
 
     //  Take screenshot of the webpage and save it as a PNG
     await page.screenshot({
