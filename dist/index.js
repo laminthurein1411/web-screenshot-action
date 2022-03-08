@@ -32,7 +32,7 @@ function captureScreenshot(url, name, options) {
         const height = (options === null || options === void 0 ? void 0 : options.height) || 1080;
         const fullPage = (options === null || options === void 0 ? void 0 : options.captureFullPage) || false;
         const type = (options === null || options === void 0 ? void 0 : options.type) || 'png';
-        const timeout = (options === null || options === void 0 ? void 0 : options.timeout) || 1000;
+        const duration = (options === null || options === void 0 ? void 0 : options.delay) || 1000;
         //  Launch browser with the provided settings
         const browser = yield puppeteer_core_1.default.launch({
             executablePath: (0, helpers_1.getChromePath)(),
@@ -41,9 +41,10 @@ function captureScreenshot(url, name, options) {
         //  Navigate to the given URL
         const page = yield browser.newPage();
         yield page.goto(url, {
-            timeout,
             waitUntil: 'networkidle2'
         });
+        //  Wait for some time before proceeding. Gives the page some breathing room to load properly
+        yield (0, helpers_1.delay)(duration);
         //  Take screenshot of the webpage and save it as a PNG
         yield page.screenshot({
             fullPage,
@@ -55,6 +56,23 @@ function captureScreenshot(url, name, options) {
     });
 }
 exports.captureScreenshot = captureScreenshot;
+
+
+/***/ }),
+
+/***/ 3621:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.delay = void 0;
+/**
+ * Wait for time
+ * @param time time in milliseconds
+ */
+const delay = (time) => new Promise(resolve => setTimeout(resolve, time));
+exports.delay = delay;
 
 
 /***/ }),
@@ -164,6 +182,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 __exportStar(__nccwpck_require__(7435), exports);
 __exportStar(__nccwpck_require__(2472), exports);
+__exportStar(__nccwpck_require__(3621), exports);
 
 
 /***/ }),
@@ -316,7 +335,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.timeout = exports.shouldCreateArtifacts = exports.type = exports.name = exports.captureFullPage = exports.height = exports.width = exports.url = void 0;
+exports.delay = exports.shouldCreateArtifacts = exports.type = exports.name = exports.captureFullPage = exports.height = exports.width = exports.url = void 0;
 //  Library
 const core = __importStar(__nccwpck_require__(2186));
 //  ======
@@ -337,7 +356,7 @@ exports.type = core.getInput('type');
 /** Boolean flag to determine if the action generates artifacts */
 exports.shouldCreateArtifacts = core.getBooleanInput('shouldCreateArtifacts');
 /** Time to wait before taking screenshot */
-exports.timeout = +core.getInput('timeout');
+exports.delay = +core.getInput('delay');
 
 
 /***/ }),
