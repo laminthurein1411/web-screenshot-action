@@ -58,3 +58,10 @@ inputs:
   shouldCreateArtifacts:
     description: 'Should generate screenshot artifacts. [boolean] (default: false)'
     default: false
+
+  # Miscellaneous
+  # -------------
+
+  delay:
+    description: 'Should wait for x milliseconds before taking a screenshot [number] (default: 1000)'
+    default: 1000

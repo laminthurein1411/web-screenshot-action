@@ -2,7 +2,7 @@
 import puppeteer from 'puppeteer-core'
 
 //  Helpers
-import { getChromePath, getFilePath } from './helpers'
+import { getChromePath, getFilePath, delay } from './helpers'
 
 //  Types
 import type { ScreenshotOptions } from 'puppeteer-core'
@@ -11,7 +11,8 @@ type captureOptions = {
     width?: number,
     height?: number,
     captureFullPage?: boolean,
-    type?: ScreenshotOptions['type']
+    type?: ScreenshotOptions['type'],
+    delay?: number
 }
 
 /** Capture screenshot of the given URL */
@@ -22,6 +23,7 @@ export async function captureScreenshot(url: string, name: string, options?: cap
     const height = options?.height || 1080
     const fullPage = options?.captureFullPage || false
     const type = options?.type || 'png'
+    const duration = options?.delay || 1000
 
     //  Launch browser with the provided settings
     const browser = await puppeteer.launch({
@@ -34,6 +36,9 @@ export async function captureScreenshot(url: string, name: string, options?: cap
     await page.goto(url, {
         waitUntil: 'networkidle2'
     })
+
+    //  Wait for some time before proceeding. Gives the page some breathing room to load properly
+    await delay(duration)
 
     //  Take screenshot of the webpage and save it as a PNG
     await page.screenshot({
