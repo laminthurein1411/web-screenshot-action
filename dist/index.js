@@ -52,8 +52,8 @@ function captureScreenshot(page) {
     return __awaiter(this, void 0, void 0, function* () {
         //  Get options
         const url = library_1.config.url;
-        const name = library_1.config.name;
-        const type = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.type) || 'png';
+        const name = path.basename(library_1.config.path);
+        const type = path.extname(library_1.config.path);
         const fullPage = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.captureFullPage) || false;
         const duration = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.delay) || 1000;
         const darkMode = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.darkMode) || false;
@@ -70,14 +70,14 @@ function captureScreenshot(page) {
         //  Wait for some time before proceeding. Gives the page some breathing room to load properly
         yield (0, helpers_1.delay)(duration);
         //  Create sub-directory if it doesn't exist
-        if (!fs.existsSync(path.dirname(name))) {
-            yield io.mkdirP(path.dirname(name));
+        if (!fs.existsSync(path.dirname(library_1.config.path))) {
+            yield io.mkdirP(path.dirname(library_1.config.path));
         }
         //  Take screenshot of the webpage and save it as a PNG
         yield page.screenshot({
             fullPage,
             type,
-            path: `${process.env.GITHUB_WORKSPACE}/${(0, helpers_1.getFilePath)(name, type)}`,
+            path: `${process.env.GITHUB_WORKSPACE}/${library_1.config.path}`,
         });
     });
 }
@@ -169,20 +169,6 @@ exports.getChromePath = getChromePath;
 
 /***/ }),
 
-/***/ 2472:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getFilePath = void 0;
-/** Returns the file-path with extension */
-const getFilePath = (name, type = 'png') => `${name}.${type}`;
-exports.getFilePath = getFilePath;
-
-
-/***/ }),
-
 /***/ 863:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -207,7 +193,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 __exportStar(__nccwpck_require__(7435), exports);
-__exportStar(__nccwpck_require__(2472), exports);
 __exportStar(__nccwpck_require__(3621), exports);
 
 
@@ -257,6 +242,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 //  Library
 const core = __importStar(__nccwpck_require__(2186));
 const puppeteer_core_1 = __importDefault(__nccwpck_require__(3435));
+const path = __importStar(__nccwpck_require__(9411));
 const captureScreenshot_1 = __nccwpck_require__(8937);
 const library_1 = __nccwpck_require__(2172);
 const helpers_1 = __nccwpck_require__(863);
@@ -267,7 +253,10 @@ const helpers_1 = __nccwpck_require__(863);
 function action() {
     return __awaiter(this, void 0, void 0, function* () {
         //  Get config parameters
-        const { url, name, type, width, height, shouldCreateArtifacts } = library_1.config;
+        const name = path.basename(library_1.config.path);
+        const width = library_1.config.width;
+        const height = library_1.config.height;
+        const shouldCreateArtifacts = library_1.config.shouldCreateArtifacts;
         //  Launch browser with the provided settings
         const browser = yield puppeteer_core_1.default.launch({
             executablePath: (0, helpers_1.getChromePath)(),
@@ -279,7 +268,7 @@ function action() {
         yield (0, captureScreenshot_1.captureScreenshot)(page);
         //  Generate artifacts
         if (shouldCreateArtifacts) {
-            (0, library_1.createArtifacts)(name, [`./${(0, helpers_1.getFilePath)(name, type)}`]);
+            (0, library_1.createArtifacts)(name, [`./${library_1.config.path}`]);
         }
         //  Close the browser
         yield browser.close();
@@ -373,7 +362,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.darkMode = exports.delay = exports.shouldCreateArtifacts = exports.type = exports.name = exports.captureFullPage = exports.height = exports.width = exports.url = void 0;
+exports.darkMode = exports.delay = exports.shouldCreateArtifacts = exports.path = exports.captureFullPage = exports.height = exports.width = exports.url = void 0;
 //  Library
 const core = __importStar(__nccwpck_require__(2186));
 //  ======
@@ -388,9 +377,7 @@ exports.height = parseInt(core.getInput('height'));
 /** Should take screenshot of the entire page */
 exports.captureFullPage = core.getBooleanInput('captureFullPage');
 /** Screenshot fileName */
-exports.name = core.getInput('name');
-/** Screenshot fileType */
-exports.type = core.getInput('type');
+exports.path = core.getInput('path');
 /** Boolean flag to determine if the action generates artifacts */
 exports.shouldCreateArtifacts = core.getBooleanInput('shouldCreateArtifacts');
 /** Time to wait before taking screenshot */

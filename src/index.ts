@@ -1,9 +1,10 @@
 //  Library
 import * as core from '@actions/core'
 import puppeteer from 'puppeteer-core'
+import * as path from 'node:path'
 import { captureScreenshot } from './captureScreenshot'
 import { config, createArtifacts } from './library'
-import { getFilePath, getChromePath } from './helpers'
+import { getChromePath } from './helpers'
 
 //  ====
 //  MAIN
@@ -13,7 +14,10 @@ import { getFilePath, getChromePath } from './helpers'
 async function action() {
 
     //  Get config parameters
-    const { name, type, width, height, shouldCreateArtifacts } = config
+    const name = path.basename(config.path)
+    const width = config.width
+    const height = config.height
+    const shouldCreateArtifacts = config.shouldCreateArtifacts
 
     //  Launch browser with the provided settings
     const browser = await puppeteer.launch({
@@ -29,7 +33,7 @@ async function action() {
 
     //  Generate artifacts
     if (shouldCreateArtifacts) {
-        createArtifacts(name, [`./${getFilePath(name, type)}`])
+        createArtifacts(name, [`./${config.path}`])
     }
 
     //  Close the browser

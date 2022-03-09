@@ -44,13 +44,9 @@ inputs:
   # Image File
   # ----------
 
-  name:
-    description: 'Screenshot filename. [string] (default: screenshot)'
-    default: 'screenshot'
-
-  type:
-    description: 'Image file-type. [png, jpeg, webp] (default: png)'
-    default: 'png'
+  path:
+    description: 'Screenshot filePath. [string] (default: screenshot.png)'
+    default: 'screenshot.png'
 
   # Should Create Artifacts
   # -----------------------

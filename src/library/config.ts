@@ -1,9 +1,6 @@
 //  Library
 import * as core from '@actions/core'
 
-//  Type Definitions
-import type { ScreenshotOptions } from 'puppeteer-core'
-
 //  ======
 //  CONFIG
 //  ======
@@ -19,10 +16,7 @@ export const height: number = parseInt(core.getInput('height'))
 export const captureFullPage = core.getBooleanInput('captureFullPage')
 
 /** Screenshot fileName */
-export const name: string = core.getInput('name')
-
-/** Screenshot fileType */
-export const type: ScreenshotOptions['type'] = core.getInput('type') as ScreenshotOptions['type']
+export const path: string = core.getInput('path')
 
 /** Boolean flag to determine if the action generates artifacts */
 export const shouldCreateArtifacts: boolean = core.getBooleanInput('shouldCreateArtifacts')

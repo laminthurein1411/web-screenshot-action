@@ -5,18 +5,18 @@ import * as io from '@actions/io'
 
 //  Helpers
 import { config } from './library'
-import { getFilePath, delay } from './helpers'
+import { delay } from './helpers'
 
 //  Types
-import type { Page } from 'puppeteer-core'
+import type { Page, ScreenshotOptions } from 'puppeteer-core'
 
 /** Capture screenshot of the given URL */
 export async function captureScreenshot(page: Page) {
 
     //  Get options
     const url = config.url
-    const name = config.name
-    const type = config?.type || 'png'
+    const name = path.basename(config.path)
+    const type = path.extname(config.path) as ScreenshotOptions['type']
     const fullPage = config?.captureFullPage || false
     const duration = config?.delay || 1000
     const darkMode = config?.darkMode || false
@@ -37,15 +37,15 @@ export async function captureScreenshot(page: Page) {
     await delay(duration)
 
     //  Create sub-directory if it doesn't exist
-    if (!fs.existsSync(path.dirname(name))) {
-        await io.mkdirP(path.dirname(name))
+    if (!fs.existsSync(path.dirname(config.path))) {
+        await io.mkdirP(path.dirname(config.path))
     }
 
     //  Take screenshot of the webpage and save it as a PNG
     await page.screenshot({
         fullPage,
         type,
-        path: `${process.env.GITHUB_WORKSPACE}/${getFilePath(name, type)}`,
+        path: `${process.env.GITHUB_WORKSPACE}/${config.path}`,
     })
 
 }
