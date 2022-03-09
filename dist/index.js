@@ -38,35 +38,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.captureScreenshot = void 0;
 //  Library
-const puppeteer_core_1 = __importDefault(__nccwpck_require__(3435));
 const fs = __importStar(__nccwpck_require__(7561));
 const path = __importStar(__nccwpck_require__(9411));
 const io = __importStar(__nccwpck_require__(7436));
 //  Helpers
 const helpers_1 = __nccwpck_require__(863);
 /** Capture screenshot of the given URL */
-function captureScreenshot(url, name, options) {
+function captureScreenshot(page, url, name, options) {
     return __awaiter(this, void 0, void 0, function* () {
         //  Get options
-        const width = (options === null || options === void 0 ? void 0 : options.width) || 1920;
-        const height = (options === null || options === void 0 ? void 0 : options.height) || 1080;
         const fullPage = (options === null || options === void 0 ? void 0 : options.captureFullPage) || false;
         const type = (options === null || options === void 0 ? void 0 : options.type) || 'png';
         const duration = (options === null || options === void 0 ? void 0 : options.delay) || 1000;
         const darkMode = (options === null || options === void 0 ? void 0 : options.darkMode) || false;
-        //  Launch browser with the provided settings
-        const browser = yield puppeteer_core_1.default.launch({
-            executablePath: (0, helpers_1.getChromePath)(),
-            defaultViewport: { height, width }
-        });
         //  Navigate to the given URL
-        const page = yield browser.newPage();
         yield page.goto(url, {
             waitUntil: 'networkidle2'
         });
@@ -79,7 +67,6 @@ function captureScreenshot(url, name, options) {
         //  Wait for some time before proceeding. Gives the page some breathing room to load properly
         yield (0, helpers_1.delay)(duration);
         //  Create sub-directory if it doesn't exist
-        console.log(path.dirname(name));
         if (!fs.existsSync(path.dirname(name))) {
             yield io.mkdirP(path.dirname(name));
         }
@@ -89,8 +76,6 @@ function captureScreenshot(url, name, options) {
             type,
             path: `${process.env.GITHUB_WORKSPACE}/${(0, helpers_1.getFilePath)(name, type)}`,
         });
-        //  Close the browser
-        yield browser.close();
     });
 }
 exports.captureScreenshot = captureScreenshot;
@@ -262,9 +247,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 //  Library
 const core = __importStar(__nccwpck_require__(2186));
+const puppeteer_core_1 = __importDefault(__nccwpck_require__(3435));
 const captureScreenshot_1 = __nccwpck_require__(8937);
 const library_1 = __nccwpck_require__(2172);
 const helpers_1 = __nccwpck_require__(863);
@@ -275,16 +264,25 @@ const helpers_1 = __nccwpck_require__(863);
 function action() {
     return __awaiter(this, void 0, void 0, function* () {
         //  Get config parameters
-        const { url, name, type, shouldCreateArtifacts } = library_1.config;
+        const { url, name, type, width, height, shouldCreateArtifacts } = library_1.config;
+        //  Launch browser with the provided settings
+        const browser = yield puppeteer_core_1.default.launch({
+            executablePath: (0, helpers_1.getChromePath)(),
+            defaultViewport: { height, width }
+        });
+        //  Create a new browser page
+        const page = yield browser.newPage();
         //  Capture screenshot of the given web url
-        yield (0, captureScreenshot_1.captureScreenshot)(url, name, library_1.config);
+        yield (0, captureScreenshot_1.captureScreenshot)(page, url, name, library_1.config);
         //  Generate artifacts
         if (shouldCreateArtifacts) {
             (0, library_1.createArtifacts)(name, [`./${(0, helpers_1.getFilePath)(name, type)}`]);
         }
+        //  Close the browser
+        yield browser.close();
     });
 }
-/** Runs the GitHub Action. Main-entrypoint. */
+/** Main-entrypoint. Runs the GitHub Action */
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -293,7 +291,6 @@ function run() {
         catch (err) {
             let error = err;
             core.setFailed(error);
-            process.exit(1);
         }
     });
 }

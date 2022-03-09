@@ -1,34 +1,25 @@
 //  Library
-import puppeteer from 'puppeteer-core'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 import * as io from '@actions/io'
 
 //  Helpers
-import { getChromePath, getFilePath, delay } from './helpers'
+import { getFilePath, delay } from './helpers'
 
 //  Types
 import type { config } from './library'
+import type { Page } from 'puppeteer-core'
 
 /** Capture screenshot of the given URL */
-export async function captureScreenshot(url: string, name: string, options?: typeof config) {
+export async function captureScreenshot(page: Page, url: string, name: string, options?: typeof config) {
 
     //  Get options
-    const width = options?.width || 1920
-    const height = options?.height || 1080
     const fullPage = options?.captureFullPage || false
     const type = options?.type || 'png'
     const duration = options?.delay || 1000
     const darkMode = options?.darkMode || false
 
-    //  Launch browser with the provided settings
-    const browser = await puppeteer.launch({
-        executablePath: getChromePath(),
-        defaultViewport: { height, width }
-    })
-
     //  Navigate to the given URL
-    const page = await browser.newPage()
     await page.goto(url, {
         waitUntil: 'networkidle2'
     })
@@ -44,7 +35,6 @@ export async function captureScreenshot(url: string, name: string, options?: typ
     await delay(duration)
 
     //  Create sub-directory if it doesn't exist
-    console.log(path.dirname(name))
     if (!fs.existsSync(path.dirname(name))) {
         await io.mkdirP(path.dirname(name))
     }
@@ -55,8 +45,5 @@ export async function captureScreenshot(url: string, name: string, options?: typ
         type,
         path: `${process.env.GITHUB_WORKSPACE}/${getFilePath(name, type)}`,
     })
-
-    //  Close the browser
-    await browser.close()
 
 }
