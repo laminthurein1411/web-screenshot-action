@@ -4,20 +4,22 @@ import * as path from 'node:path'
 import * as io from '@actions/io'
 
 //  Helpers
+import { config } from './library'
 import { getFilePath, delay } from './helpers'
 
 //  Types
-import type { config } from './library'
 import type { Page } from 'puppeteer-core'
 
 /** Capture screenshot of the given URL */
-export async function captureScreenshot(page: Page, url: string, name: string, options?: typeof config) {
+export async function captureScreenshot(page: Page) {
 
     //  Get options
-    const fullPage = options?.captureFullPage || false
-    const type = options?.type || 'png'
-    const duration = options?.delay || 1000
-    const darkMode = options?.darkMode || false
+    const url = config.url
+    const name = config.name
+    const type = config?.type || 'png'
+    const fullPage = config?.captureFullPage || false
+    const duration = config?.delay || 1000
+    const darkMode = config?.darkMode || false
 
     //  Navigate to the given URL
     await page.goto(url, {

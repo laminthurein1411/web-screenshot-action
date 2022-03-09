@@ -13,7 +13,7 @@ import { getFilePath, getChromePath } from './helpers'
 async function action() {
 
     //  Get config parameters
-    const { url, name, type, width, height, shouldCreateArtifacts } = config
+    const { name, type, width, height, shouldCreateArtifacts } = config
 
     //  Launch browser with the provided settings
     const browser = await puppeteer.launch({
@@ -25,7 +25,7 @@ async function action() {
     const page = await browser.newPage()
 
     //  Capture screenshot of the given web url
-    await captureScreenshot(page, url, name, config)
+    await captureScreenshot(page)
 
     //  Generate artifacts
     if (shouldCreateArtifacts) {

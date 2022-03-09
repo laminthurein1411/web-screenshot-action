@@ -45,15 +45,18 @@ const fs = __importStar(__nccwpck_require__(7561));
 const path = __importStar(__nccwpck_require__(9411));
 const io = __importStar(__nccwpck_require__(7436));
 //  Helpers
+const library_1 = __nccwpck_require__(2172);
 const helpers_1 = __nccwpck_require__(863);
 /** Capture screenshot of the given URL */
-function captureScreenshot(page, url, name, options) {
+function captureScreenshot(page) {
     return __awaiter(this, void 0, void 0, function* () {
         //  Get options
-        const fullPage = (options === null || options === void 0 ? void 0 : options.captureFullPage) || false;
-        const type = (options === null || options === void 0 ? void 0 : options.type) || 'png';
-        const duration = (options === null || options === void 0 ? void 0 : options.delay) || 1000;
-        const darkMode = (options === null || options === void 0 ? void 0 : options.darkMode) || false;
+        const url = library_1.config.url;
+        const name = library_1.config.name;
+        const type = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.type) || 'png';
+        const fullPage = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.captureFullPage) || false;
+        const duration = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.delay) || 1000;
+        const darkMode = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.darkMode) || false;
         //  Navigate to the given URL
         yield page.goto(url, {
             waitUntil: 'networkidle2'
@@ -273,7 +276,7 @@ function action() {
         //  Create a new browser page
         const page = yield browser.newPage();
         //  Capture screenshot of the given web url
-        yield (0, captureScreenshot_1.captureScreenshot)(page, url, name, library_1.config);
+        yield (0, captureScreenshot_1.captureScreenshot)(page);
         //  Generate artifacts
         if (shouldCreateArtifacts) {
             (0, library_1.createArtifacts)(name, [`./${(0, helpers_1.getFilePath)(name, type)}`]);
