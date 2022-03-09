@@ -33,7 +33,7 @@ async function action() {
 
     //  Generate artifacts
     if (shouldCreateArtifacts) {
-        createArtifacts(name, [`./${config.path}`])
+        createArtifacts('screenshots', [`./${config.path}`])
     }
 
     //  Close the browser
