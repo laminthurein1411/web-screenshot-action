@@ -242,7 +242,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 //  Library
 const core = __importStar(__nccwpck_require__(2186));
 const puppeteer_core_1 = __importDefault(__nccwpck_require__(3435));
-const path = __importStar(__nccwpck_require__(9411));
 const captureScreenshot_1 = __nccwpck_require__(8937);
 const library_1 = __nccwpck_require__(2172);
 const helpers_1 = __nccwpck_require__(863);
@@ -253,10 +252,7 @@ const helpers_1 = __nccwpck_require__(863);
 function action() {
     return __awaiter(this, void 0, void 0, function* () {
         //  Get config parameters
-        const name = path.basename(library_1.config.path);
-        const width = library_1.config.width;
-        const height = library_1.config.height;
-        const shouldCreateArtifacts = library_1.config.shouldCreateArtifacts;
+        const { width, height, shouldCreateArtifacts } = library_1.config;
         //  Launch browser with the provided settings
         const browser = yield puppeteer_core_1.default.launch({
             executablePath: (0, helpers_1.getChromePath)(),
@@ -268,7 +264,7 @@ function action() {
         yield (0, captureScreenshot_1.captureScreenshot)(page);
         //  Generate artifacts
         if (shouldCreateArtifacts) {
-            (0, library_1.createArtifacts)(name, [`./${library_1.config.path}`]);
+            (0, library_1.createArtifacts)('screenshots', [`./${library_1.config.path}`]);
         }
         //  Close the browser
         yield browser.close();

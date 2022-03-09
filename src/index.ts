@@ -14,10 +14,7 @@ import { getChromePath } from './helpers'
 async function action() {
 
     //  Get config parameters
-    const name = path.basename(config.path)
-    const width = config.width
-    const height = config.height
-    const shouldCreateArtifacts = config.shouldCreateArtifacts
+    const { width, height, shouldCreateArtifacts } = config
 
     //  Launch browser with the provided settings
     const browser = await puppeteer.launch({
