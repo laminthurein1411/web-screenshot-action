@@ -86,6 +86,13 @@ jobs:
           url: https://www.github.com/Shresht7/web-screenshot-action
           path: screenshots/screenshot-light.png
 
+      - name: Screenshot
+        uses: Shresht7/web-screenshot-action@main
+        id: screenshot
+        with:
+          url: https://www.github.com/Shresht7/web-screenshot-action
+          path: screenshot.png
+
       - name: Screenshot-Dark
         uses: Shresht7/web-screenshot-action@main
         id: screenshot-dark
