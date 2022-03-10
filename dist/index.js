@@ -242,9 +242,10 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 //  Library
 const core = __importStar(__nccwpck_require__(2186));
 const puppeteer_core_1 = __importDefault(__nccwpck_require__(3435));
-const captureScreenshot_1 = __nccwpck_require__(8937);
-const library_1 = __nccwpck_require__(2172);
+//  Helpers
 const helpers_1 = __nccwpck_require__(863);
+const library_1 = __nccwpck_require__(2172);
+const captureScreenshot_1 = __nccwpck_require__(8937);
 //  ====
 //  MAIN
 //  ====
@@ -265,9 +266,11 @@ function action() {
         //  Generate artifacts
         if (shouldCreateArtifacts) {
             (0, library_1.createArtifacts)('screenshots', [`./${library_1.config.path}`]);
+            core.notice('📷 Screenshot artifacts created 📦');
         }
         //  Close the browser
         yield browser.close();
+        core.notice('📷 Screenshots Captured ✅');
     });
 }
 /** Main-entrypoint. Runs the GitHub Action */
@@ -278,6 +281,7 @@ function run() {
         }
         catch (err) {
             let error = err;
+            core.error(error);
             core.setFailed(error);
         }
     });
@@ -366,6 +370,9 @@ const core = __importStar(__nccwpck_require__(2186));
 //  ======
 /** URL to take screenshot of */
 exports.url = core.getInput('url', { required: true });
+if (!exports.url) {
+    throw new Error('URL is required!');
+}
 /** Screenshot fileName */
 exports.path = core.getInput('path');
 /** Screenshot width */

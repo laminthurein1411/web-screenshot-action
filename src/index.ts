@@ -1,10 +1,11 @@
 //  Library
 import * as core from '@actions/core'
 import puppeteer from 'puppeteer-core'
-import * as path from 'node:path'
-import { captureScreenshot } from './captureScreenshot'
-import { config, createArtifacts } from './library'
+
+//  Helpers
 import { getChromePath } from './helpers'
+import { config, createArtifacts } from './library'
+import { captureScreenshot } from './captureScreenshot'
 
 //  ====
 //  MAIN
@@ -31,10 +32,13 @@ async function action() {
     //  Generate artifacts
     if (shouldCreateArtifacts) {
         createArtifacts('screenshots', [`./${config.path}`])
+        core.notice('📷 Screenshot artifacts created 📦')
     }
 
     //  Close the browser
     await browser.close()
+
+    core.notice('📷 Screenshots Captured ✅')
 
 }
 
@@ -44,6 +48,7 @@ async function run() {
         action()
     } catch (err) {
         let error = err as Error
+        core.error(error)
         core.setFailed(error)
     }
 }

@@ -10,6 +10,7 @@ import type { ScreenshotOptions } from 'puppeteer-core'
 
 /** URL to take screenshot of */
 export const url: string = core.getInput('url', { required: true })
+if (!url) { throw new Error('URL is required!') }
 
 /** Screenshot fileName */
 export const path: string = core.getInput('path')
