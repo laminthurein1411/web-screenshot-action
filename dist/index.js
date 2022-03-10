@@ -53,7 +53,7 @@ function captureScreenshot(page) {
         //  Get options
         const url = library_1.config.url;
         const name = path.basename(library_1.config.path);
-        const type = path.extname(library_1.config.path);
+        const type = path.extname(library_1.config.path).slice(1);
         const fullPage = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.captureFullPage) || false;
         const duration = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.delay) || 1000;
         const darkMode = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.darkMode) || false;

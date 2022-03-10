@@ -16,7 +16,7 @@ export async function captureScreenshot(page: Page) {
     //  Get options
     const url = config.url
     const name = path.basename(config.path)
-    const type = path.extname(config.path) as ScreenshotOptions['type']
+    const type = path.extname(config.path).slice(1) as ScreenshotOptions['type']
     const fullPage = config?.captureFullPage || false
     const duration = config?.delay || 1000
     const darkMode = config?.darkMode || false
