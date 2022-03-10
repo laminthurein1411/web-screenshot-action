@@ -51,12 +51,9 @@ const helpers_1 = __nccwpck_require__(863);
 function captureScreenshot(page) {
     return __awaiter(this, void 0, void 0, function* () {
         //  Get options
-        const url = library_1.config.url;
         const name = path.basename(library_1.config.path);
         const type = path.extname(library_1.config.path).slice(1);
-        const fullPage = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.captureFullPage) || false;
-        const duration = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.delay) || 1000;
-        const darkMode = (library_1.config === null || library_1.config === void 0 ? void 0 : library_1.config.darkMode) || false;
+        const { url, delay: duration, darkMode, captureFullPage: fullPage, captureBeyondViewport, encoding, omitBackground, } = library_1.config;
         //  Navigate to the given URL
         yield page.goto(url, {
             waitUntil: 'networkidle2'
@@ -75,8 +72,11 @@ function captureScreenshot(page) {
         }
         //  Take screenshot of the webpage and save it as a PNG
         yield page.screenshot({
-            fullPage,
             type,
+            fullPage,
+            captureBeyondViewport,
+            encoding,
+            omitBackground,
             path: `${process.env.GITHUB_WORKSPACE}/${library_1.config.path}`,
         });
     });
@@ -358,7 +358,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.darkMode = exports.delay = exports.shouldCreateArtifacts = exports.path = exports.captureFullPage = exports.height = exports.width = exports.url = void 0;
+exports.darkMode = exports.delay = exports.shouldCreateArtifacts = exports.encoding = exports.omitBackground = exports.captureBeyondViewport = exports.captureFullPage = exports.height = exports.width = exports.path = exports.url = void 0;
 //  Library
 const core = __importStar(__nccwpck_require__(2186));
 //  ======
@@ -366,14 +366,20 @@ const core = __importStar(__nccwpck_require__(2186));
 //  ======
 /** URL to take screenshot of */
 exports.url = core.getInput('url', { required: true });
+/** Screenshot fileName */
+exports.path = core.getInput('path');
 /** Screenshot width */
 exports.width = parseInt(core.getInput('width'));
 /** Screenshot height */
 exports.height = parseInt(core.getInput('height'));
 /** Should take screenshot of the entire page */
 exports.captureFullPage = core.getBooleanInput('captureFullPage');
-/** Screenshot fileName */
-exports.path = core.getInput('path');
+/** Should capture beyond viewport */
+exports.captureBeyondViewport = core.getBooleanInput('captureBeyondViewport');
+/** Should omit the background */
+exports.omitBackground = core.getBooleanInput('omitBackground');
+/** encoding */
+exports.encoding = core.getInput('encoding');
 /** Boolean flag to determine if the action generates artifacts */
 exports.shouldCreateArtifacts = core.getBooleanInput('shouldCreateArtifacts');
 /** Time to wait before taking screenshot */

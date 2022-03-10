@@ -14,12 +14,17 @@ import type { Page, ScreenshotOptions } from 'puppeteer-core'
 export async function captureScreenshot(page: Page) {
 
     //  Get options
-    const url = config.url
     const name = path.basename(config.path)
     const type = path.extname(config.path).slice(1) as ScreenshotOptions['type']
-    const fullPage = config?.captureFullPage || false
-    const duration = config?.delay || 1000
-    const darkMode = config?.darkMode || false
+    const {
+        url,
+        delay: duration,
+        darkMode,
+        captureFullPage: fullPage,
+        captureBeyondViewport,
+        encoding,
+        omitBackground,
+    } = config
 
     //  Navigate to the given URL
     await page.goto(url, {
@@ -43,8 +48,11 @@ export async function captureScreenshot(page: Page) {
 
     //  Take screenshot of the webpage and save it as a PNG
     await page.screenshot({
-        fullPage,
         type,
+        fullPage,
+        captureBeyondViewport,
+        encoding,
+        omitBackground,
         path: `${process.env.GITHUB_WORKSPACE}/${config.path}`,
     })
 

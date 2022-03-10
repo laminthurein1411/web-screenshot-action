@@ -26,8 +26,15 @@ inputs:
     description: 'URL to take the screenshot of. [Required string]'
     required: true
 
-  # Dimensions
+  # Image File
   # ----------
+
+  path:
+    description: 'Screenshot filePath. [string] (default: screenshot.png)'
+    default: 'screenshot.png'
+
+  # Screenshot Options
+  # ------------------
 
   width:
     description: 'Viewport width. [number] (default: 1920)'
@@ -41,12 +48,16 @@ inputs:
     description: 'Should take screenshot of the entire page. [boolean] (default: false)'
     default: false
 
-  # Image File
-  # ----------
+  captureBeyondViewport:
+    description: 'Should capture beyond the viewport. [boolean] (default: false)'
+    default: false
 
-  path:
-    description: 'Screenshot filePath. [string] (default: screenshot.png)'
-    default: 'screenshot.png'
+  omitBackground:
+    description: 'Should omit the background allowing for transparent images. [boolean] (default: false)'
+    default: false
+
+  encoding:
+    description: 'Output encoding. [base64, binary]'
 
   # Should Create Artifacts
   # -----------------------
