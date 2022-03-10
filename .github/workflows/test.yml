@@ -35,10 +35,3 @@ jobs:
       - uses: ./
         with:
           url: https://github.com/Shresht7/web-screenshot-action
-
-  push: # Push the generated dist folder to the repo
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: git status
