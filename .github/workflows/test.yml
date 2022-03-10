@@ -40,4 +40,5 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      run: git status
+      - uses: actions/checkout@v3
+        run: git status
