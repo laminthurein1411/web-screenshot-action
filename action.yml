@@ -2,89 +2,72 @@
 # WEB SCREENSHOT
 # ==============
 
-name: 'Web Screenshot Action'
-description: 'Capture screenshots of a website 📷'
-author: 'Shresht7'
+name: "Web Screenshot Action"
+description: "Capture screenshots of a website 📷"
+author: "Shresht7"
 
 branding:
   icon: camera
   color: yellow
 
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: "node16"
+  main: "dist/index.js"
 
 # Inputs
 # ======
 
 inputs:
-
-  # URL
-  # ---
-
-  # string
-  # required
   url:
-    description: 'URL to take the screenshot of'
+    description: "URL to take the screenshot of"
     required: true
 
-  # Image Output
-  # ------------
-
-  # string
   path:
-    description: 'Screenshot file-path'
-    default: 'screenshot.png'
+    description: "Screenshot file-path"
+    default: "screenshot.png"
+    required: false
 
-  # Screenshot Options
-  # ------------------
-
-  # number
   width:
-    description: 'Viewport width'
-    default: 1920
+    description: "Viewport width"
+    default: "1920"
+    required: false
 
-  # number
   height:
-    description: 'Viewport height'
-    default: 1080
+    description: "Viewport height"
+    default: "1080"
+    required: false
 
-  # boolean
   captureFullPage:
-    description: 'Should take screenshot of the entire page'
-    default: false
+    description: "Should take screenshot of the entire page"
+    default: "false"
+    required: false
 
-  # boolean
   captureBeyondViewport:
-    description: 'Should capture beyond the viewport'
-    default: false
+    description: "Should capture beyond the viewport"
+    default: "false"
+    required: false
 
-  # boolean
   omitBackground:
-    description: 'Should omit the background allowing for transparent images'
-    default: false
+    description: "Should omit the background allowing for transparent images"
+    default: "false"
+    required: false
 
   # base64 | binary | undefined
   encoding:
-    description: 'Output encoding'
+    description: "Output encoding"
+    required: false
 
-  # Artifacts
-  # ---------
-
-  # boolean
   shouldCreateArtifacts:
-    description: 'Should generate screenshot artifacts'
-    default: false
+    description: "Should generate screenshot artifacts"
+    default: "false"
+    required: false
 
-  # Miscellaneous
-  # -------------
-
-  # number
   delay:
-    description: 'Should wait for x milliseconds before taking a screenshot'
-    default: 1000
+    description: "Should wait for x milliseconds before taking a screenshot"
+    default: "1000"
+    required: false
 
-  # boolean
   darkMode:
-    description: 'Should enable dark mode by setting `prefers-color-scheme: dark` media feature'
-    default: false
+    description: "Should enable dark mode by setting `prefers-color-scheme: dark` media feature"
+    default: "false"
+    required: false
