@@ -1,11 +1,66 @@
-# Web-Screenshot-Action 📷
---------------------------
+<!-- ===================== -->
+<!-- WEB SCREENSHOT ACTION -->
+<!-- ===================== -->
 
-GitHub Action to take a screenshot of a website.
+<h1 align='center'>
+  📷 Web Screenshot Action 📷
+</h1>
+
+<!-- ================= -->
+<!-- REPOSITORY BADGES -->
+<!-- ================= -->
+
+<div align='center'>
+
+[![Release](https://img.shields.io/github/v/release/Shresht7/web-screenshot-action?style=for-the-badge)](https://github.com/Shresht7/web-screenshot-action/releases)
+[![License](https://img.shields.io/github/license/Shresht7/web-screenshot-action?style=for-the-badge)](./LICENSE)
+
+</div>
+
+<!-- =========== -->
+<!-- DESCRIPTION -->
+<!-- =========== -->
+
+<p align='center'>
+  <!-- slot: description  -->
+GitHub Action to take screenshots of websites.
+<!-- /slot -->
+</p>
+
+<!-- =============== -->
+<!-- WORKFLOW BADGES -->
+<!-- =============== -->
+
+<div align='center'>
+
+[![Test](https://github.com/Shresht7/web-screenshot-action/actions/workflows/test.yml/badge.svg)](https://github.com/Shresht7/web-screenshot-action/actions/workflows/test.yml)
+[![Validate](https://github.com/Shresht7/web-screenshot-action/actions/workflows/validate.yml/badge.svg)](https://github.com/Shresht7/web-screenshot-action/actions/workflows/validate.yml)
+[![Action Readme](https://github.com/Shresht7/web-screenshot-action/actions/workflows/action-readme.yml/badge.svg)](https://github.com/Shresht7/web-screenshot-action/actions/workflows/action-readme.yml)
+
+</div>
+
+<!-- ================= -->
+<!-- TABLE OF CONTENTS -->
+<!-- ================= -->
+
+<details>
+
+<summary align='center'>Table of Contents</summary>
+
+- [📖 Usage](#-usage)
+  - [📋 Inputs](#-inputs)
+  - [📋 Outputs](#-outputs)
+- [📄 Workflow Setup](#-workflow-setup)
+  - [Example](#example)
+- [📑 License](#-license)
+
+</details>
+
+---
 
 ![Example-Screenshot](./screenshot.png)
 
-## Usage
+## 📖 Usage
 
 ```yaml
 - name: Take Screenshot
@@ -14,8 +69,9 @@ GitHub Action to take a screenshot of a website.
     url: https://github.com/Shresht7/web-screenshot-action
 ```
 
-### Inputs
+### 📋 Inputs
 
+<!-- slot: inputs -->
 | Input                   |                           Type | Description                                                                   |                  |
 | ----------------------- | -----------------------------: | ----------------------------------------------------------------------------- | ---------------: |
 | `url`                   |                       `string` | URL to take the screenshot of                                                 |     **required** |
@@ -29,12 +85,16 @@ GitHub Action to take a screenshot of a website.
 | `shouldCreateArtifacts` |                      `boolean` | Should generate screenshot artifacts                                          |          `false` |
 | `delay`                 |                       `number` | Should wait `x` milliseconds before taking screenshot                         |           `1000` |
 | `darkMode`              |                      `boolean` | Should enable dark mode by setting `prefers-color-scheme: dark` media feature |          `false` |
+<!-- /slot -->
 
-### Outputs
+### 📋 Outputs
 
 if `shouldCreateArtifacts` is set to `true`, an [artifact](https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts) will be created with the screenshots.
 
-## Workflow Setup
+<!-- slot: outputs -->
+<!-- /slot -->
+
+## 📄 Workflow Setup
 
 Intended to be used as a sub-task in some other workflow, this action's only job is to generate the screenshots. What you do with them is up to you.
 
@@ -44,6 +104,18 @@ The [screenshot](#-web-screenshot-action) in this README is auto-generated using
 
 [`.github/workflows/screenshot.yml`](./.github/workflows/screenshot.yml):
 
+<!-- WORKFLOW EXAMPLE -->
+<!-- ================ -->
+
+<details>
+
+<summary>
+  click here to show the workflow
+</summary>
+
+<br />
+
+<!-- slot: example, prepend: ```yaml, append: ``` -->
 ```yaml
 # ============================
 #         SCREENSHOT
@@ -112,3 +184,13 @@ jobs:
           git commit -m 'Update screenshot 📷'
           git push
 ```
+<!-- /slot -->
+
+</details>
+
+<!-- LICENSE -->
+<!-- ======= -->
+
+## 📑 License
+
+> [MIT License](./LICENSE)
