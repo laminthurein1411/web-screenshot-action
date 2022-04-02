@@ -117,7 +117,7 @@ The [screenshot](#-web-screenshot-action) in this README is auto-generated using
 
 <br />
 
-<!-- slot: example,  prepend: ```yaml, append: ``` -->
+<!-- slot: example,   prepend: ```yaml, append: ``` -->
 ```yaml
 # ============================
 #         SCREENSHOT
@@ -159,9 +159,9 @@ jobs:
           url: https://www.github.com/Shresht7/web-screenshot-action
           path: screenshots/screenshot-light.png
 
-      - name: Screenshot
+      - name: Screenshot-Light
         uses: Shresht7/web-screenshot-action@main
-        id: screenshot
+        id: screenshot-light
         with:
           url: https://www.github.com/Shresht7/web-screenshot-action
           path: screenshot.png
