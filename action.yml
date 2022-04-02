@@ -18,6 +18,9 @@ runs:
 # ======
 
 inputs:
+  # Source And Destination
+  # ----------------------
+
   url:
     description: "URL to take the screenshot of"
     required: true
@@ -26,6 +29,9 @@ inputs:
     description: "Screenshot file-path"
     default: "screenshot.png"
     required: false
+
+  # Image Dimensions
+  # ----------------
 
   width:
     description: "Viewport width"
@@ -36,6 +42,9 @@ inputs:
     description: "Viewport height"
     default: "1080"
     required: false
+
+  # Screenshot Options
+  # ------------------
 
   captureFullPage:
     description: "Should take screenshot of the entire page"
@@ -56,6 +65,9 @@ inputs:
   encoding:
     description: "Output encoding"
     required: false
+
+  # Miscellaneous
+  # -------------
 
   shouldCreateArtifacts:
     description: "Should generate screenshot artifacts"
