@@ -1,444 +1,6 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 8937:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.captureScreenshot = void 0;
-//  Library
-const fs = __importStar(__nccwpck_require__(7561));
-const path = __importStar(__nccwpck_require__(9411));
-const io = __importStar(__nccwpck_require__(7436));
-//  Helpers
-const library_1 = __nccwpck_require__(2172);
-const helpers_1 = __nccwpck_require__(863);
-/** Capture screenshot of the given URL */
-function captureScreenshot(page) {
-    return __awaiter(this, void 0, void 0, function* () {
-        //  Get options
-        const name = path.basename(library_1.config.path);
-        const type = path.extname(library_1.config.path).slice(1);
-        const { url, delay: duration, darkMode, captureFullPage: fullPage, captureBeyondViewport, encoding, omitBackground, } = library_1.config;
-        //  Navigate to the given URL
-        yield page.goto(url, {
-            waitUntil: 'networkidle2'
-        });
-        //  Enable dark-mode if needed
-        if (darkMode) {
-            page.emulateMediaFeatures([
-                { name: 'prefers-color-scheme', value: 'dark' }
-            ]);
-        }
-        //  Wait for some time before proceeding. Gives the page some breathing room to load properly
-        yield (0, helpers_1.delay)(duration);
-        //  Create sub-directory if it doesn't exist
-        if (!fs.existsSync(path.dirname(library_1.config.path))) {
-            yield io.mkdirP(path.dirname(library_1.config.path));
-        }
-        //  Take screenshot of the webpage and save it as a PNG
-        yield page.screenshot({
-            type,
-            fullPage,
-            captureBeyondViewport,
-            encoding,
-            omitBackground,
-            path: `${process.env.GITHUB_WORKSPACE}/${library_1.config.path}`,
-        });
-    });
-}
-exports.captureScreenshot = captureScreenshot;
-
-
-/***/ }),
-
-/***/ 3621:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.delay = void 0;
-/**
- * Wait for time
- * @param time time in milliseconds
- */
-const delay = (time) => new Promise(resolve => setTimeout(resolve, time));
-exports.delay = delay;
-
-
-/***/ }),
-
-/***/ 7435:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getChromePath = void 0;
-//  Library
-const os = __importStar(__nccwpck_require__(612));
-const path = __importStar(__nccwpck_require__(9411));
-/** Returns the path to the Chrome executable on the current operating system */
-function getChromePath() {
-    let location = '';
-    //  Determine the chrome.exe location for the current os
-    switch (os.type()) {
-        case 'Windows_NT':
-            const programFiles = os.arch() === 'x64'
-                ? process.env["PROGRAMFILES(X86)"]
-                : process.env["PROGRAMFILES"];
-            if (!programFiles) {
-                throw new Error('Could not locate PROGRAMFILES');
-            }
-            location = path.join(programFiles, "Google/Chrome/Application/chrome.exe");
-            break;
-        case 'Linux':
-            location = "/usr/bin/google-chrome";
-            break;
-        case 'Darwin':
-            location = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-            break;
-    }
-    //  Throw error if the chrome path could not be determined
-    if (!location) {
-        throw new Error(`Failed to run on ${os.type()}`);
-    }
-    //  Normalize and return
-    return path.normalize(location);
-}
-exports.getChromePath = getChromePath;
-
-
-/***/ }),
-
-/***/ 863:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-//  =======
-//  HELPERS
-//  =======
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__nccwpck_require__(7435), exports);
-__exportStar(__nccwpck_require__(3621), exports);
-
-
-/***/ }),
-
-/***/ 4822:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-//  Library
-const core = __importStar(__nccwpck_require__(2186));
-const puppeteer_core_1 = __importDefault(__nccwpck_require__(3435));
-//  Helpers
-const helpers_1 = __nccwpck_require__(863);
-const library_1 = __nccwpck_require__(2172);
-const captureScreenshot_1 = __nccwpck_require__(8937);
-//  ====
-//  MAIN
-//  ====
-/** Web-Screenshot Action Main Function */
-function action() {
-    return __awaiter(this, void 0, void 0, function* () {
-        //  Get config parameters
-        const { width, height, shouldCreateArtifacts } = library_1.config;
-        //  Launch browser with the provided settings
-        const browser = yield puppeteer_core_1.default.launch({
-            executablePath: (0, helpers_1.getChromePath)(),
-            defaultViewport: { height, width }
-        });
-        //  Create a new browser page
-        const page = yield browser.newPage();
-        //  Capture screenshot of the given web url
-        yield (0, captureScreenshot_1.captureScreenshot)(page);
-        //  Generate artifacts
-        if (shouldCreateArtifacts) {
-            (0, library_1.createArtifacts)('screenshots', [`./${library_1.config.path}`]);
-            core.notice('📷 Screenshot artifacts created 📦');
-        }
-        //  Close the browser
-        yield browser.close();
-        core.notice('📷 Screenshots Captured ✅');
-    });
-}
-/** Main-entrypoint. Runs the GitHub Action */
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            action();
-        }
-        catch (err) {
-            let error = err;
-            core.error(error);
-            core.setFailed(error);
-        }
-    });
-}
-run();
-
-
-/***/ }),
-
-/***/ 1764:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createArtifacts = void 0;
-//  Library
-const artifact = __importStar(__nccwpck_require__(2605));
-/** Generate artifacts from the provided file paths */
-function createArtifacts(name, files, rootDir = './', options) {
-    const client = artifact.create();
-    return client.uploadArtifact(name, files, rootDir, options);
-}
-exports.createArtifacts = createArtifacts;
-
-
-/***/ }),
-
-/***/ 8562:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.darkMode = exports.delay = exports.shouldCreateArtifacts = exports.encoding = exports.omitBackground = exports.captureBeyondViewport = exports.captureFullPage = exports.height = exports.width = exports.path = exports.url = void 0;
-//  Library
-const core = __importStar(__nccwpck_require__(2186));
-//  ======
-//  CONFIG
-//  ======
-/** URL to take screenshot of */
-exports.url = core.getInput('url', { required: true });
-if (!exports.url) {
-    throw new Error('URL is required!');
-}
-/** Screenshot fileName */
-exports.path = core.getInput('path');
-/** Screenshot width */
-exports.width = parseInt(core.getInput('width'));
-/** Screenshot height */
-exports.height = parseInt(core.getInput('height'));
-/** Should take screenshot of the entire page */
-exports.captureFullPage = core.getBooleanInput('captureFullPage');
-/** Should capture beyond viewport */
-exports.captureBeyondViewport = core.getBooleanInput('captureBeyondViewport');
-/** Should omit the background */
-exports.omitBackground = core.getBooleanInput('omitBackground');
-/** encoding */
-exports.encoding = core.getInput('encoding');
-/** Boolean flag to determine if the action generates artifacts */
-exports.shouldCreateArtifacts = core.getBooleanInput('shouldCreateArtifacts');
-/** Time to wait before taking screenshot */
-exports.delay = +core.getInput('delay');
-/** Prefers Dark Color Scheme */
-exports.darkMode = core.getBooleanInput('darkMode');
-
-
-/***/ }),
-
-/***/ 2172:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-//  =======
-//  LIBRARY
-//  =======
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.config = void 0;
-exports.config = __importStar(__nccwpck_require__(8562));
-__exportStar(__nccwpck_require__(1764), exports);
-
-
-/***/ }),
-
 /***/ 2605:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -5900,7 +5462,7 @@ function setup(env) {
 			namespaces = split[i].replace(/\*/g, '.*?');
 
 			if (namespaces[0] === '-') {
-				createDebug.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+				createDebug.skips.push(new RegExp('^' + namespaces.slice(1) + '$'));
 			} else {
 				createDebug.names.push(new RegExp('^' + namespaces + '$'));
 			}
@@ -14050,7 +13612,11 @@ exports.BrowserContext = BrowserContext;
  */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -17886,6 +17452,7 @@ exports.FrameManagerEmittedEvents = {
     FrameAttached: Symbol('FrameManager.FrameAttached'),
     FrameNavigated: Symbol('FrameManager.FrameNavigated'),
     FrameDetached: Symbol('FrameManager.FrameDetached'),
+    FrameSwapped: Symbol('FrameManager.FrameSwapped'),
     LifecycleEvent: Symbol('FrameManager.LifecycleEvent'),
     FrameNavigatedWithinDocument: Symbol('FrameManager.FrameNavigatedWithinDocument'),
     ExecutionContextCreated: Symbol('FrameManager.ExecutionContextCreated'),
@@ -18162,6 +17729,9 @@ class FrameManager extends EventEmitter_js_1.EventEmitter {
             // For frames that become OOP iframes, the reason would be 'swap'.
             if (frame)
                 this._removeFramesRecursively(frame);
+        }
+        else if (reason === 'swap') {
+            this.emit(exports.FrameManagerEmittedEvents.FrameSwapped, frame);
         }
     }
     _onExecutionContextCreated(contextPayload, session) {
@@ -19056,7 +18626,7 @@ class HTTPRequest {
     /**
      * Adds an async request handler to the processing queue.
      * Deferred handlers are not guaranteed to execute in any particular order,
-     * but they are guarnateed to resolve before the request interception
+     * but they are guaranteed to resolve before the request interception
      * is finalized.
      */
     enqueueInterceptAction(pendingHandler) {
@@ -19177,7 +18747,7 @@ class HTTPRequest {
      *
      * @returns `null` unless the request failed. If the request fails this can
      * return an object with `errorText` containing a human-readable error
-     * message, e.g. `net::ERR_FAILED`. It is not guaranteeded that there will be
+     * message, e.g. `net::ERR_FAILED`. It is not guaranteed that there will be
      * failure text if the request fails.
      */
     failure() {
@@ -20279,7 +19849,11 @@ exports.Touchscreen = Touchscreen;
  */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -21227,6 +20801,7 @@ class LifecycleWatcher {
             helper_js_1.helper.addEventListener(frameManager._client, Connection_js_1.CDPSessionEmittedEvents.Disconnected, () => this._terminate(new Error('Navigation failed because browser has disconnected!'))),
             helper_js_1.helper.addEventListener(this._frameManager, FrameManager_js_1.FrameManagerEmittedEvents.LifecycleEvent, this._checkLifecycleComplete.bind(this)),
             helper_js_1.helper.addEventListener(this._frameManager, FrameManager_js_1.FrameManagerEmittedEvents.FrameNavigatedWithinDocument, this._navigatedWithinDocument.bind(this)),
+            helper_js_1.helper.addEventListener(this._frameManager, FrameManager_js_1.FrameManagerEmittedEvents.FrameSwapped, this._frameSwapped.bind(this)),
             helper_js_1.helper.addEventListener(this._frameManager, FrameManager_js_1.FrameManagerEmittedEvents.FrameDetached, this._onFrameDetached.bind(this)),
             helper_js_1.helper.addEventListener(this._frameManager.networkManager(), NetworkManager_js_1.NetworkManagerEmittedEvents.Request, this._onRequest.bind(this)),
         ];
@@ -21288,14 +20863,25 @@ class LifecycleWatcher {
         this._hasSameDocumentNavigation = true;
         this._checkLifecycleComplete();
     }
+    _frameSwapped(frame) {
+        if (frame !== this._frame)
+            return;
+        this._swapped = true;
+        this._checkLifecycleComplete();
+    }
     _checkLifecycleComplete() {
         // We expect navigation to commit.
         if (!checkLifecycle(this._frame, this._expectedLifecycle))
             return;
         this._lifecycleCallback();
         if (this._frame._loaderId === this._initialLoaderId &&
-            !this._hasSameDocumentNavigation)
+            !this._hasSameDocumentNavigation) {
+            if (this._swapped) {
+                this._swapped = false;
+                this._newDocumentNavigationCompleteCallback();
+            }
             return;
+        }
         if (this._hasSameDocumentNavigation)
             this._sameDocumentNavigationCompleteCallback();
         if (this._frame._loaderId !== this._initialLoaderId)
@@ -21678,6 +21264,7 @@ class NetworkManager extends EventEmitter_js_1.EventEmitter {
             const requestPausedEvent = this._networkEventManager.getRequestPaused(networkRequestId);
             if (requestPausedEvent) {
                 const { requestId: fetchRequestId } = requestPausedEvent;
+                this._patchRequestEventHeaders(event, requestPausedEvent);
                 this._onRequest(event, fetchRequestId);
                 this._networkEventManager.forgetRequestPaused(networkRequestId);
             }
@@ -21739,11 +21326,19 @@ class NetworkManager extends EventEmitter_js_1.EventEmitter {
             return requestWillBeSentEvent;
         })();
         if (requestWillBeSentEvent) {
+            this._patchRequestEventHeaders(requestWillBeSentEvent, event);
             this._onRequest(requestWillBeSentEvent, fetchRequestId);
         }
         else {
             this._networkEventManager.storeRequestPaused(networkRequestId, event);
         }
+    }
+    _patchRequestEventHeaders(requestWillBeSentEvent, requestPausedEvent) {
+        requestWillBeSentEvent.request.headers = {
+            ...requestWillBeSentEvent.request.headers,
+            // includes extra headers, like: Accept, Origin
+            ...requestPausedEvent.request.headers,
+        };
     }
     _onRequest(event, fetchRequestId) {
         let redirectChain = [];
@@ -25887,7 +25482,11 @@ exports.assertNever = assertNever;
  */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -25938,7 +25537,11 @@ exports.getFetch = getFetch;
  */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -26195,14 +25798,11 @@ async function getReadableFromProtocolStream(client, handle) {
     const { Readable } = await Promise.resolve().then(() => __importStar(__nccwpck_require__(2781)));
     let eof = false;
     return new Readable({
-        async read() {
-            // TODO: use the advised size parameter to read function once
-            // crbug.com/1290727 is resolved.
-            // Also, see https://github.com/puppeteer/puppeteer/pull/7868.
+        async read(size) {
             if (eof) {
                 return null;
             }
-            const response = await client.send('IO.read', { handle });
+            const response = await client.send('IO.read', { handle, size });
             this.push(response.data, response.base64Encoded ? 'base64' : undefined);
             if (response.eof) {
                 eof = true;
@@ -26402,7 +26002,11 @@ exports["default"] = puppeteer;
  */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -26851,6 +26455,9 @@ function httpRequest(url, method, response) {
     let options = {
         ...urlParsed,
         method,
+        headers: {
+            Connection: 'keep-alive',
+        },
     };
     const proxyURL = (0, proxy_from_env_1.getProxyForUrl)(url);
     if (proxyURL) {
@@ -26910,7 +26517,11 @@ function httpRequest(url, method, response) {
  */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -27180,7 +26791,11 @@ function pidExists(pid) {
 
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -42724,6 +42339,444 @@ function defaultCallback(err) {
 
 /***/ }),
 
+/***/ 1901:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.captureScreenshot = void 0;
+//  Library
+const fs = __importStar(__nccwpck_require__(7561));
+const path = __importStar(__nccwpck_require__(9411));
+const io = __importStar(__nccwpck_require__(7436));
+//  Helpers
+const library_1 = __nccwpck_require__(4048);
+const helpers_1 = __nccwpck_require__(3202);
+/** Capture screenshot of the given URL */
+function captureScreenshot(page) {
+    return __awaiter(this, void 0, void 0, function* () {
+        //  Get options
+        const name = path.basename(library_1.config.path);
+        const type = path.extname(library_1.config.path).slice(1);
+        const { url, delay: duration, darkMode, captureFullPage: fullPage, captureBeyondViewport, encoding, omitBackground, } = library_1.config;
+        //  Navigate to the given URL
+        yield page.goto(url, {
+            waitUntil: 'networkidle2'
+        });
+        //  Enable dark-mode if needed
+        if (darkMode) {
+            page.emulateMediaFeatures([
+                { name: 'prefers-color-scheme', value: 'dark' }
+            ]);
+        }
+        //  Wait for some time before proceeding. Gives the page some breathing room to load properly
+        yield (0, helpers_1.delay)(duration);
+        //  Create sub-directory if it doesn't exist
+        if (!fs.existsSync(path.dirname(library_1.config.path))) {
+            yield io.mkdirP(path.dirname(library_1.config.path));
+        }
+        //  Take screenshot of the webpage and save it as a PNG
+        yield page.screenshot({
+            type,
+            fullPage,
+            captureBeyondViewport,
+            encoding,
+            omitBackground,
+            path: `${process.env.GITHUB_WORKSPACE}/${library_1.config.path}`,
+        });
+    });
+}
+exports.captureScreenshot = captureScreenshot;
+
+
+/***/ }),
+
+/***/ 9916:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.delay = void 0;
+/**
+ * Wait for time
+ * @param time time in milliseconds
+ */
+const delay = (time) => new Promise(resolve => setTimeout(resolve, time));
+exports.delay = delay;
+
+
+/***/ }),
+
+/***/ 7823:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getChromePath = void 0;
+//  Library
+const os = __importStar(__nccwpck_require__(612));
+const path = __importStar(__nccwpck_require__(9411));
+/** Returns the path to the Chrome executable on the current operating system */
+function getChromePath() {
+    let location = '';
+    //  Determine the chrome.exe location for the current os
+    switch (os.type()) {
+        case 'Windows_NT':
+            const programFiles = os.arch() === 'x64'
+                ? process.env["PROGRAMFILES(X86)"]
+                : process.env["PROGRAMFILES"];
+            if (!programFiles) {
+                throw new Error('Could not locate PROGRAMFILES');
+            }
+            location = path.join(programFiles, "Google/Chrome/Application/chrome.exe");
+            break;
+        case 'Linux':
+            location = "/usr/bin/google-chrome";
+            break;
+        case 'Darwin':
+            location = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+            break;
+    }
+    //  Throw error if the chrome path could not be determined
+    if (!location) {
+        throw new Error(`Failed to run on ${os.type()}`);
+    }
+    //  Normalize and return
+    return path.normalize(location);
+}
+exports.getChromePath = getChromePath;
+
+
+/***/ }),
+
+/***/ 3202:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+//  =======
+//  HELPERS
+//  =======
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+__exportStar(__nccwpck_require__(7823), exports);
+__exportStar(__nccwpck_require__(9916), exports);
+
+
+/***/ }),
+
+/***/ 6144:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+//  Library
+const core = __importStar(__nccwpck_require__(2186));
+const puppeteer_core_1 = __importDefault(__nccwpck_require__(3435));
+//  Helpers
+const helpers_1 = __nccwpck_require__(3202);
+const library_1 = __nccwpck_require__(4048);
+const captureScreenshot_1 = __nccwpck_require__(1901);
+//  ====
+//  MAIN
+//  ====
+/** Web-Screenshot Action Main Function */
+function action() {
+    return __awaiter(this, void 0, void 0, function* () {
+        //  Get config parameters
+        const { width, height, shouldCreateArtifacts } = library_1.config;
+        //  Launch browser with the provided settings
+        const browser = yield puppeteer_core_1.default.launch({
+            executablePath: (0, helpers_1.getChromePath)(),
+            defaultViewport: { height, width }
+        });
+        //  Create a new browser page
+        const page = yield browser.newPage();
+        //  Capture screenshot of the given web url
+        yield (0, captureScreenshot_1.captureScreenshot)(page);
+        //  Generate artifacts
+        if (shouldCreateArtifacts) {
+            (0, library_1.createArtifacts)('screenshots', [`./${library_1.config.path}`]);
+            core.notice('📷 Screenshot artifacts created 📦');
+        }
+        //  Close the browser
+        yield browser.close();
+        core.notice('📷 Screenshots Captured ✅');
+    });
+}
+/** Main-entrypoint. Runs the GitHub Action */
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            action();
+        }
+        catch (err) {
+            let error = err;
+            core.error(error);
+            core.setFailed(error);
+        }
+    });
+}
+run();
+
+
+/***/ }),
+
+/***/ 2343:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.createArtifacts = void 0;
+//  Library
+const artifact = __importStar(__nccwpck_require__(2605));
+/** Generate artifacts from the provided file paths */
+function createArtifacts(name, files, rootDir = './', options) {
+    const client = artifact.create();
+    return client.uploadArtifact(name, files, rootDir, options);
+}
+exports.createArtifacts = createArtifacts;
+
+
+/***/ }),
+
+/***/ 1010:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.darkMode = exports.delay = exports.shouldCreateArtifacts = exports.encoding = exports.omitBackground = exports.captureBeyondViewport = exports.captureFullPage = exports.height = exports.width = exports.path = exports.url = void 0;
+//  Library
+const core = __importStar(__nccwpck_require__(2186));
+//  ======
+//  CONFIG
+//  ======
+/** URL to take screenshot of */
+exports.url = core.getInput('url', { required: true });
+if (!exports.url) {
+    throw new Error('URL is required!');
+}
+/** Screenshot fileName */
+exports.path = core.getInput('path');
+/** Screenshot width */
+exports.width = parseInt(core.getInput('width'));
+/** Screenshot height */
+exports.height = parseInt(core.getInput('height'));
+/** Should take screenshot of the entire page */
+exports.captureFullPage = core.getBooleanInput('captureFullPage');
+/** Should capture beyond viewport */
+exports.captureBeyondViewport = core.getBooleanInput('captureBeyondViewport');
+/** Should omit the background */
+exports.omitBackground = core.getBooleanInput('omitBackground');
+/** encoding */
+exports.encoding = core.getInput('encoding');
+/** Boolean flag to determine if the action generates artifacts */
+exports.shouldCreateArtifacts = core.getBooleanInput('shouldCreateArtifacts');
+/** Time to wait before taking screenshot */
+exports.delay = +core.getInput('delay');
+/** Prefers Dark Color Scheme */
+exports.darkMode = core.getBooleanInput('darkMode');
+
+
+/***/ }),
+
+/***/ 4048:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+//  =======
+//  LIBRARY
+//  =======
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.config = void 0;
+exports.config = __importStar(__nccwpck_require__(1010));
+__exportStar(__nccwpck_require__(2343), exports);
+
+
+/***/ }),
+
 /***/ 1269:
 /***/ ((module) => {
 
@@ -42960,7 +43013,7 @@ module.exports = require("zlib");
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"puppeteer-core","version":"13.5.0","description":"A high-level API to control headless Chrome over the DevTools Protocol","main":"./cjs-entry-core.js","types":"lib/types.d.ts","repository":"github:puppeteer/puppeteer","engines":{"node":">=10.18.1"},"scripts":{"test-browser":"wtr","test-browser-watch":"wtr --watch","unit":"npm run tsc-cjs && mocha --config mocha-config/puppeteer-unit-tests.js","unit-debug":"npm run tsc-cjs && mocha --inspect-brk --config mocha-config/puppeteer-unit-tests.js","unit-with-coverage":"cross-env COVERAGE=1 npm run unit","assert-unit-coverage":"cross-env COVERAGE=1 mocha --config mocha-config/coverage-tests.js","funit":"cross-env PUPPETEER_PRODUCT=firefox npm run unit","test":"npm run tsc && npm run lint --silent && npm run unit-with-coverage && npm run test-browser","prepare":"node typescript-if-required.js && husky install","prepublishOnly":"npm run build","dev-install":"npm run tsc && node install.js","eslint":"([ \\"$CI\\" = true ] && eslint --ext js --ext ts --quiet -f codeframe . || eslint --ext js --ext ts .)","eslint-fix":"eslint --ext js --ext ts --fix .","commitlint":"commitlint --from=HEAD~1","prettier":"prettier --check .","prettier-fix":"prettier --write .","lint":"npm run eslint && npm run build && npm run doc && npm run prettier","doc":"node utils/doclint/cli.js","generate-api-docs-for-testing":"commonmark docs/api.md > docs/api.html","clean-lib":"rimraf lib","build":"npm run tsc && npm run generate-d-ts","tsc":"npm run clean-lib && tsc --version && npm run tsc-cjs && npm run tsc-esm","tsc-cjs":"tsc -b src/tsconfig.cjs.json","tsc-esm":"tsc -b src/tsconfig.esm.json","apply-next-version":"node utils/apply_next_version.js","test-install":"scripts/test-install.sh","clean-docs":"rimraf website/docs && rimraf docs-api-json","generate-d-ts":"npm run clean-docs && api-extractor run --local --verbose","generate-docs":"npm run generate-d-ts && api-documenter markdown -i docs-api-json -o website/docs && node utils/remove-tag.js","ensure-correct-devtools-protocol-revision":"ts-node -s scripts/ensure-correct-devtools-protocol-package","ensure-pinned-deps":"ts-node -s scripts/ensure-pinned-deps","test-types-file":"ts-node -s scripts/test-ts-definition-files.ts","release":"node utils/remove_version_suffix.js && standard-version --commit-all","build-docs-production":"cd website && npm install && npm run build"},"files":["lib/types.d.ts","lib/**/*.d.ts","lib/**/*.d.ts.map","lib/**/*.js","lib/**/*.js.map","install.js","typescript-if-required.js","cjs-entry.js","cjs-entry-core.js"],"author":"The Chromium Authors","license":"Apache-2.0","dependencies":{"cross-fetch":"3.1.5","debug":"4.3.3","devtools-protocol":"0.0.969999","extract-zip":"2.0.1","https-proxy-agent":"5.0.0","pkg-dir":"4.2.0","progress":"2.0.3","proxy-from-env":"1.1.0","rimraf":"3.0.2","tar-fs":"2.1.1","unbzip2-stream":"1.4.3","ws":"8.5.0"},"devDependencies":{"@commitlint/cli":"16.2.1","@commitlint/config-conventional":"16.2.1","@microsoft/api-documenter":"7.15.3","@microsoft/api-extractor":"7.19.4","@types/debug":"4.1.7","@types/mime":"2.0.3","@types/mocha":"9.1.0","@types/node":"17.0.19","@types/progress":"2.0.5","@types/proxy-from-env":"1.0.1","@types/rimraf":"3.0.2","@types/sinon":"10.0.11","@types/tar-fs":"2.0.1","@types/ws":"8.5.2","@typescript-eslint/eslint-plugin":"5.12.1","@typescript-eslint/parser":"5.12.1","@web/test-runner":"0.13.27","commonmark":"0.30.0","cross-env":"7.0.3","eslint":"8.9.0","eslint-config-prettier":"8.5.0","eslint-plugin-import":"2.25.4","eslint-plugin-mocha":"10.0.3","eslint-plugin-prettier":"4.0.0","eslint-plugin-unicorn":"41.0.0","esprima":"4.0.1","expect":"25.2.7","husky":"7.0.4","jpeg-js":"0.4.3","mime":"3.0.0","minimist":"1.2.5","mocha":"9.2.1","ncp":"2.0.0","pixelmatch":"5.2.1","pngjs":"6.0.0","prettier":"2.5.1","sinon":"13.0.1","source-map-support":"0.5.21","standard-version":"9.3.2","text-diff":"1.0.1","ts-node":"10.7.0","typescript":"4.5.5"}}');
+module.exports = JSON.parse('{"name":"puppeteer-core","version":"13.5.2","description":"A high-level API to control headless Chrome over the DevTools Protocol","keywords":["puppeteer","chrome","headless","automation"],"main":"./cjs-entry-core.js","types":"lib/types.d.ts","repository":"github:puppeteer/puppeteer","engines":{"node":">=10.18.1"},"scripts":{"test-browser":"wtr","test-browser-watch":"wtr --watch","unit":"npm run tsc-cjs && mocha --config mocha-config/puppeteer-unit-tests.js","unit-debug":"npm run tsc-cjs && mocha --inspect-brk --config mocha-config/puppeteer-unit-tests.js","unit-with-coverage":"cross-env COVERAGE=1 npm run unit","assert-unit-coverage":"cross-env COVERAGE=1 mocha --config mocha-config/coverage-tests.js","funit":"cross-env PUPPETEER_PRODUCT=firefox npm run unit","test":"npm run tsc && npm run lint --silent && npm run unit-with-coverage && npm run test-browser","prepare":"node typescript-if-required.js && husky install","prepublishOnly":"npm run build","dev-install":"npm run tsc && node install.js","eslint":"([ \\"$CI\\" = true ] && eslint --ext js --ext ts --quiet -f codeframe . || eslint --ext js --ext ts .)","eslint-fix":"eslint --ext js --ext ts --fix .","commitlint":"commitlint --from=HEAD~1","prettier":"prettier --check .","prettier-fix":"prettier --write .","lint":"npm run eslint && npm run build && npm run doc && npm run prettier","doc":"node utils/doclint/cli.js","generate-api-docs-for-testing":"commonmark docs/api.md > docs/api.html","clean-lib":"rimraf lib","build":"npm run tsc && npm run generate-d-ts","tsc":"npm run clean-lib && tsc --version && npm run tsc-cjs && npm run tsc-esm","tsc-cjs":"tsc -b src/tsconfig.cjs.json","tsc-esm":"tsc -b src/tsconfig.esm.json","apply-next-version":"node utils/apply_next_version.js","test-install":"scripts/test-install.sh","clean-docs":"rimraf website/docs && rimraf docs-api-json","generate-d-ts":"npm run clean-docs && api-extractor run --local --verbose","generate-docs":"npm run generate-d-ts && api-documenter markdown -i docs-api-json -o website/docs && node utils/remove-tag.js","ensure-correct-devtools-protocol-revision":"ts-node -s scripts/ensure-correct-devtools-protocol-package","ensure-pinned-deps":"ts-node -s scripts/ensure-pinned-deps","test-types-file":"ts-node -s scripts/test-ts-definition-files.ts","release":"node utils/remove_version_suffix.js && standard-version --commit-all","build-docs-production":"cd website && npm install && npm run build"},"files":["lib/types.d.ts","lib/**/*.d.ts","lib/**/*.d.ts.map","lib/**/*.js","lib/**/*.js.map","install.js","typescript-if-required.js","cjs-entry.js","cjs-entry-core.js"],"author":"The Chromium Authors","license":"Apache-2.0","dependencies":{"cross-fetch":"3.1.5","debug":"4.3.4","devtools-protocol":"0.0.969999","extract-zip":"2.0.1","https-proxy-agent":"5.0.0","pkg-dir":"4.2.0","progress":"2.0.3","proxy-from-env":"1.1.0","rimraf":"3.0.2","tar-fs":"2.1.1","unbzip2-stream":"1.4.3","ws":"8.5.0"},"devDependencies":{"@commitlint/cli":"16.2.3","@commitlint/config-conventional":"16.2.1","@microsoft/api-documenter":"7.16.0","@microsoft/api-extractor":"7.19.5","@types/debug":"4.1.7","@types/mime":"2.0.3","@types/mocha":"9.1.0","@types/node":"17.0.23","@types/progress":"2.0.5","@types/proxy-from-env":"1.0.1","@types/rimraf":"3.0.2","@types/sinon":"10.0.11","@types/tar-fs":"2.0.1","@types/ws":"8.5.3","@typescript-eslint/eslint-plugin":"5.17.0","@typescript-eslint/parser":"5.17.0","@web/test-runner":"0.13.27","commonmark":"0.30.0","cross-env":"7.0.3","eslint":"8.12.0","eslint-config-prettier":"8.5.0","eslint-plugin-import":"2.25.4","eslint-plugin-mocha":"10.0.3","eslint-plugin-prettier":"4.0.0","eslint-plugin-unicorn":"41.0.1","esprima":"4.0.1","expect":"25.2.7","husky":"7.0.4","jpeg-js":"0.4.3","mime":"3.0.0","minimist":"1.2.6","mocha":"9.2.2","ncp":"2.0.0","pixelmatch":"5.2.1","pngjs":"6.0.0","prettier":"2.6.1","sinon":"13.0.1","source-map-support":"0.5.21","standard-version":"9.3.2","text-diff":"1.0.1","ts-node":"10.7.0","typescript":"4.6.3"}}');
 
 /***/ }),
 
@@ -43014,7 +43067,7 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(4822);
+/******/ 	var __webpack_exports__ = __nccwpck_require__(6144);
 /******/ 	module.exports = __webpack_exports__;
 /******/ 	
 /******/ })()
