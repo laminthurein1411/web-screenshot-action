@@ -22,8 +22,8 @@
 <!-- =========== -->
 
 <p align='center'>
-  <!-- slot: description  -->
-GitHub Action to take screenshots of websites.
+  <!-- slot: description -->
+Capture screenshots of a website 📷
 <!-- /slot -->
 </p>
 
@@ -72,19 +72,19 @@ GitHub Action to take screenshots of websites.
 ### 📋 Inputs
 
 <!-- slot: inputs -->
-| Input                   |                           Type | Description                                                                   |                  |
-| ----------------------- | -----------------------------: | ----------------------------------------------------------------------------- | ---------------: |
-| `url`                   |                       `string` | URL to take the screenshot of                                                 |     **required** |
-| `path`                  |                       `string` | Screenshot filepath                                                           | `screenshot.png` |
-| `width`                 |                       `number` | Viewport width                                                                |           `1920` |
-| `height`                |                       `number` | Viewport height                                                               |           `1080` |
-| `captureFullPage`       |                      `boolean` | Should take screenshot of the entire page                                     |          `false` |
-| `captureBeyondViewport` |                      `boolean` | Should take screenshot beyond the viewport                                    |          `false` |
-| `omitBackground`        |                      `boolean` | Should omit the background to take transparent screenshots                    |          `false` |
-| `encoding`              | `'base64'/'binary'/undefined ` | Output encoding                                                               |      `undefined` |
-| `shouldCreateArtifacts` |                      `boolean` | Should generate screenshot artifacts                                          |          `false` |
-| `delay`                 |                       `number` | Should wait `x` milliseconds before taking screenshot                         |           `1000` |
-| `darkMode`              |                      `boolean` | Should enable dark mode by setting `prefers-color-scheme: dark` media feature |          `false` |
+| Input                   | Description                                                                   |          Default | Required |
+| :---------------------- | :---------------------------------------------------------------------------- | ---------------: | :------: |
+| `url`                   | URL to take the screenshot of                                                 |      `undefined` |     ✅    |
+| `path`                  | Screenshot file-path                                                          | `screenshot.png` |          |
+| `width`                 | Viewport width                                                                |           `1920` |          |
+| `height`                | Viewport height                                                               |           `1080` |          |
+| `captureFullPage`       | Should take screenshot of the entire page                                     |          `false` |          |
+| `captureBeyondViewport` | Should capture beyond the viewport                                            |          `false` |          |
+| `omitBackground`        | Should omit the background allowing for transparent images                    |          `false` |          |
+| `encoding`              | Output encoding                                                               |      `undefined` |          |
+| `shouldCreateArtifacts` | Should generate screenshot artifacts                                          |          `false` |          |
+| `delay`                 | Should wait for x milliseconds before taking a screenshot                     |           `1000` |          |
+| `darkMode`              | Should enable dark mode by setting `prefers-color-scheme: dark` media feature |          `false` |          |
 <!-- /slot -->
 
 ### 📋 Outputs
@@ -92,6 +92,7 @@ GitHub Action to take screenshots of websites.
 if `shouldCreateArtifacts` is set to `true`, an [artifact](https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts) will be created with the screenshots.
 
 <!-- slot: outputs -->
+
 <!-- /slot -->
 
 ## 📄 Workflow Setup
@@ -115,7 +116,7 @@ The [screenshot](#-web-screenshot-action) in this README is auto-generated using
 
 <br />
 
-<!-- slot: example, prepend: ```yaml, append: ``` -->
+<!-- slot: example,  prepend: ```yaml, append: ``` -->
 ```yaml
 # ============================
 #         SCREENSHOT
@@ -129,7 +130,7 @@ name: Screenshot
 # =================
 
 on:
-  workflow_dispatch:  # When a workflow event is dispatched manually
+  workflow_dispatch: # When a workflow event is dispatched manually
 
 # Jobs
 # ====
@@ -137,10 +138,9 @@ on:
 jobs:
   screenshot:
     runs-on: ubuntu-latest
-    
+
     name: Screenshot
     steps:
-    
       # Actions/Checkout ✅
       # ===================
 
@@ -176,13 +176,25 @@ jobs:
       # Push to Main 🌐
       # ===============
 
-      - name: Commit
+      # Check if there are any changes in the current-working-directory
+      - name: check for changes
+        id: git-diff
+        run: |
+          if git diff --exit-code; then
+          echo "::set-output name=changes_exist::false"
+          else
+          echo "::set-output name=changes_exist::true"
+          fi
+
+      - name: add, commit and push
+        if: ${{ steps.git-diff.outputs.changes_exist == 'true' }}
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
           git commit -m 'Update screenshot 📷'
           git push
+
 ```
 <!-- /slot -->
 
