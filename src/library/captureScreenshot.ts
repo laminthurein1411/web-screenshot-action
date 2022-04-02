@@ -4,8 +4,8 @@ import * as path from 'node:path'
 import * as io from '@actions/io'
 
 //  Helpers
-import * as config from './config'
-import { delay } from './helpers'
+import * as config from '../config'
+import { delay } from '../helpers'
 
 //  Types
 import type { Page, ScreenshotOptions } from 'puppeteer-core'
