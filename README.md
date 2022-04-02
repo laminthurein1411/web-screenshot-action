@@ -6,7 +6,6 @@
   📷 Web Screenshot Action 📷
 </h1>
 
-<!-- ================= -->
 <!-- REPOSITORY BADGES -->
 <!-- ================= -->
 
@@ -17,7 +16,6 @@
 
 </div>
 
-<!-- =========== -->
 <!-- DESCRIPTION -->
 <!-- =========== -->
 
@@ -27,7 +25,6 @@ Capture screenshots of a website 📷
 <!-- /slot -->
 </p>
 
-<!-- =============== -->
 <!-- WORKFLOW BADGES -->
 <!-- =============== -->
 
@@ -40,7 +37,6 @@ Capture screenshots of a website 📷
 
 </div>
 
-<!-- ================= -->
 <!-- TABLE OF CONTENTS -->
 <!-- ================= -->
 
@@ -49,10 +45,9 @@ Capture screenshots of a website 📷
 <summary align='center'>Table of Contents</summary>
 
 - [📖 Usage](#-usage)
-  - [📋 Inputs](#-inputs)
-  - [📋 Outputs](#-outputs)
-- [📄 Workflow Setup](#-workflow-setup)
-  - [Example](#example)
+- [📋 Inputs](#-inputs)
+- [📋 Outputs](#-outputs)
+- [📄 Workflow Example](#-workflow-example)
 - [📑 License](#-license)
 
 </details>
@@ -63,6 +58,8 @@ Capture screenshots of a website 📷
 
 ## 📖 Usage
 
+Use this action in a workflow step and provide the URL you want to take the screenshot of.
+
 ```yaml
 - name: Take Screenshot
   uses: Shresht7/web-screenshot-action@main
@@ -70,12 +67,20 @@ Capture screenshots of a website 📷
     url: https://github.com/Shresht7/web-screenshot-action
 ```
 
-### 📋 Inputs
+The screenshot will be saved as `screenshot.png` by default. The file-path and type can be changed using [input parameters](#-inputs).
+
+if `shouldCreateArtifacts` is set to `true`, an [artifact](https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts) will be created with the screenshots.
+
+Intended to be used as a sub-task in some other workflow, this action's only job is to generate the screenshots. What you do with them is up to you. See [example](#-workflow-example).
+
+---
+
+## 📋 Inputs
 
 <!-- slot: inputs -->
 | Input                   | Description                                                                   |          Default | Required |
 | :---------------------- | :---------------------------------------------------------------------------- | ---------------: | :------: |
-| `url`                   | URL to take the screenshot of                                                 |      `undefined` |     ✅    |
+| `url`                   | URL to take the screenshot of                                                 |      `undefined` |    ✅     |
 | `path`                  | Screenshot file-path                                                          | `screenshot.png` |          |
 | `width`                 | Viewport width                                                                |           `1920` |          |
 | `height`                | Viewport height                                                               |           `1080` |          |
@@ -88,7 +93,7 @@ Capture screenshots of a website 📷
 | `darkMode`              | Should enable dark mode by setting `prefers-color-scheme: dark` media feature |          `false` |          |
 <!-- /slot -->
 
-### 📋 Outputs
+## 📋 Outputs
 
 if `shouldCreateArtifacts` is set to `true`, an [artifact](https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts) will be created with the screenshots.
 
@@ -96,15 +101,14 @@ if `shouldCreateArtifacts` is set to `true`, an [artifact](https://help.github.c
 
 <!-- /slot -->
 
-## 📄 Workflow Setup
-
-Intended to be used as a sub-task in some other workflow, this action's only job is to generate the screenshots. What you do with them is up to you.
-
-### Example
+## 📄 Workflow Example
 
 The [screenshot](#-web-screenshot-action) in this README is auto-generated using this action!
 
 [`.github/workflows/screenshot.yml`](./.github/workflows/screenshot.yml):
+
+[![Screenshot](https://github.com/Shresht7/web-screenshot-action/actions/workflows/screenshot.yml/badge.svg)](https://github.com/Shresht7/web-screenshot-action/actions/workflows/screenshot.yml)
+
 
 <!-- WORKFLOW EXAMPLE -->
 <!-- ================ -->
@@ -200,6 +204,8 @@ jobs:
 <!-- /slot -->
 
 </details>
+
+---
 
 <!-- LICENSE -->
 <!-- ======= -->
