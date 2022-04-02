@@ -80,7 +80,7 @@ Intended to be used as a sub-task in some other workflow, this action's only job
 <!-- slot: inputs -->
 | Input                   | Description                                                                   |          Default | Required |
 | :---------------------- | :---------------------------------------------------------------------------- | ---------------: | :------: |
-| `url`                   | URL to take the screenshot of                                                 |      `undefined` |    ✅     |
+| `url`                   | URL to take the screenshot of                                                 |      `undefined` |     ✅    |
 | `path`                  | Screenshot file-path                                                          | `screenshot.png` |          |
 | `width`                 | Viewport width                                                                |           `1920` |          |
 | `height`                | Viewport height                                                               |           `1080` |          |
@@ -121,7 +121,7 @@ The [screenshot](#-web-screenshot-action) in this README is auto-generated using
 
 <br />
 
-<!-- slot: example,    prepend: ```yaml, append: ``` -->
+<!-- slot: example,     prepend: ```yaml, append: ``` -->
 ```yaml
 # ============================
 #         SCREENSHOT
