@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Shresht7/web-screenshot-action#README",
   "devDependencies": {
+    "@types/js-yaml": "^4.0.5",
     "@types/node": "^17.0.23",
     "@vercel/ncc": "^0.33.3",
     "js-yaml": "^4.1.0",
