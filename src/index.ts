@@ -3,8 +3,9 @@ import * as core from '@actions/core'
 import puppeteer from 'puppeteer-core'
 
 //  Helpers
+import * as config from './config'
 import { getChromePath } from './helpers'
-import { config, createArtifacts } from './library'
+import { createArtifacts } from './library'
 import { captureScreenshot } from './captureScreenshot'
 
 //  ====

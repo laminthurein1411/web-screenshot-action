@@ -4,7 +4,7 @@ import * as path from 'node:path'
 import * as io from '@actions/io'
 
 //  Helpers
-import { config } from './library'
+import * as config from './config'
 import { delay } from './helpers'
 
 //  Types
