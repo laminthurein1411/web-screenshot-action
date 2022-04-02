@@ -62,7 +62,7 @@ Use this action in a workflow step and provide the URL you want to take the scre
 
 ```yaml
 - name: Take Screenshot
-  uses: Shresht7/web-screenshot-action@main
+  uses: Shresht7/web-screenshot-action@v1
   with:
     url: https://github.com/Shresht7/web-screenshot-action
 ```
@@ -80,7 +80,7 @@ Intended to be used as a sub-task in some other workflow, this action's only job
 <!-- slot: inputs -->
 | Input                   | Description                                                                   |          Default | Required |
 | :---------------------- | :---------------------------------------------------------------------------- | ---------------: | :------: |
-| `url`                   | URL to take the screenshot of                                                 |      `undefined` |     ✅    |
+| `url`                   | URL to take the screenshot of                                                 |      `undefined` |    ✅     |
 | `path`                  | Screenshot file-path                                                          | `screenshot.png` |          |
 | `width`                 | Viewport width                                                                |           `1920` |          |
 | `height`                | Viewport height                                                               |           `1080` |          |
@@ -157,21 +157,21 @@ jobs:
       # ===================
 
       - name: Screenshot
-        uses: Shresht7/web-screenshot-action@main
+        uses: Shresht7/web-screenshot-action@v1
         id: screenshot
         with:
           url: https://www.github.com/Shresht7/web-screenshot-action
           path: screenshots/screenshot-light.png
 
       - name: Screenshot-Light
-        uses: Shresht7/web-screenshot-action@main
+        uses: Shresht7/web-screenshot-action@v1
         id: screenshot-light
         with:
           url: https://www.github.com/Shresht7/web-screenshot-action
           path: screenshot.png
 
       - name: Screenshot-Dark
-        uses: Shresht7/web-screenshot-action@main
+        uses: Shresht7/web-screenshot-action@v1
         id: screenshot-dark
         with:
           url: https://www.github.com/Shresht7/web-screenshot-action
