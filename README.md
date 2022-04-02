@@ -36,6 +36,7 @@ GitHub Action to take screenshots of websites.
 [![Test](https://github.com/Shresht7/web-screenshot-action/actions/workflows/test.yml/badge.svg)](https://github.com/Shresht7/web-screenshot-action/actions/workflows/test.yml)
 [![Validate](https://github.com/Shresht7/web-screenshot-action/actions/workflows/validate.yml/badge.svg)](https://github.com/Shresht7/web-screenshot-action/actions/workflows/validate.yml)
 [![Action Readme](https://github.com/Shresht7/web-screenshot-action/actions/workflows/action-readme.yml/badge.svg)](https://github.com/Shresht7/web-screenshot-action/actions/workflows/action-readme.yml)
+[![Screenshot](https://github.com/Shresht7/web-screenshot-action/actions/workflows/screenshot.yml/badge.svg)](https://github.com/Shresht7/web-screenshot-action/actions/workflows/screenshot.yml)
 
 </div>
 
