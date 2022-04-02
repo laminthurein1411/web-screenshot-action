@@ -10,7 +10,7 @@ name: Screenshot
 # =================
 
 on:
-  workflow_dispatch:  # When a workflow event is dispatched manually
+  workflow_dispatch: # When a workflow event is dispatched manually
 
 # Jobs
 # ====
@@ -18,10 +18,9 @@ on:
 jobs:
   screenshot:
     runs-on: ubuntu-latest
-    
+
     name: Screenshot
     steps:
-    
       # Actions/Checkout ✅
       # ===================
 
@@ -57,7 +56,18 @@ jobs:
       # Push to Main 🌐
       # ===============
 
-      - name: Commit
+      # Check if there are any changes in the current-working-directory
+      - name: check for changes
+        id: git-diff
+        run: |
+          if git diff --exit-code; then
+          echo "::set-output name=changes_exist::false"
+          else
+          echo "::set-output name=changes_exist::true"
+          fi
+
+      - name: add, commit and push
+        if: ${{ steps.git-diff.outputs.changes_exist == 'true' }}
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
