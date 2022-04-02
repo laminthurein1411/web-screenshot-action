@@ -42339,7 +42339,7 @@ function defaultCallback(err) {
 
 /***/ }),
 
-/***/ 1901:
+/***/ 7672:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -42376,50 +42376,110 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.captureScreenshot = void 0;
 //  Library
-const fs = __importStar(__nccwpck_require__(7561));
-const path = __importStar(__nccwpck_require__(9411));
-const io = __importStar(__nccwpck_require__(7436));
+const core = __importStar(__nccwpck_require__(2186));
+const puppeteer_core_1 = __importDefault(__nccwpck_require__(3435));
 //  Helpers
-const library_1 = __nccwpck_require__(4048);
+const config = __importStar(__nccwpck_require__(6373));
 const helpers_1 = __nccwpck_require__(3202);
-/** Capture screenshot of the given URL */
-function captureScreenshot(page) {
+const library_1 = __nccwpck_require__(4048);
+const library_2 = __nccwpck_require__(4048);
+/** Web-Screenshot Action Main Function */
+function action() {
     return __awaiter(this, void 0, void 0, function* () {
-        //  Get options
-        const name = path.basename(library_1.config.path);
-        const type = path.extname(library_1.config.path).slice(1);
-        const { url, delay: duration, darkMode, captureFullPage: fullPage, captureBeyondViewport, encoding, omitBackground, } = library_1.config;
-        //  Navigate to the given URL
-        yield page.goto(url, {
-            waitUntil: 'networkidle2'
+        //  Get config parameters
+        const { width, height, shouldCreateArtifacts } = config;
+        //  Launch browser with the provided settings
+        const browser = yield puppeteer_core_1.default.launch({
+            executablePath: (0, helpers_1.getChromePath)(),
+            defaultViewport: { height, width }
         });
-        //  Enable dark-mode if needed
-        if (darkMode) {
-            page.emulateMediaFeatures([
-                { name: 'prefers-color-scheme', value: 'dark' }
-            ]);
+        //  Create a new browser page
+        const page = yield browser.newPage();
+        //  Capture screenshot of the given web url
+        yield (0, library_2.captureScreenshot)(page);
+        //  Generate artifacts
+        if (shouldCreateArtifacts) {
+            (0, library_1.createArtifacts)('screenshots', [`./${config.path}`]);
+            core.notice('📷 Screenshot artifacts created 📦');
         }
-        //  Wait for some time before proceeding. Gives the page some breathing room to load properly
-        yield (0, helpers_1.delay)(duration);
-        //  Create sub-directory if it doesn't exist
-        if (!fs.existsSync(path.dirname(library_1.config.path))) {
-            yield io.mkdirP(path.dirname(library_1.config.path));
-        }
-        //  Take screenshot of the webpage and save it as a PNG
-        yield page.screenshot({
-            type,
-            fullPage,
-            captureBeyondViewport,
-            encoding,
-            omitBackground,
-            path: `${process.env.GITHUB_WORKSPACE}/${library_1.config.path}`,
-        });
+        //  Close the browser
+        yield browser.close();
+        core.notice('📷 Screenshots Captured ✅');
     });
 }
-exports.captureScreenshot = captureScreenshot;
+//  -----------------
+exports["default"] = action;
+//  -----------------
+
+
+/***/ }),
+
+/***/ 6373:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.darkMode = exports.delay = exports.shouldCreateArtifacts = exports.encoding = exports.omitBackground = exports.captureBeyondViewport = exports.captureFullPage = exports.height = exports.width = exports.path = exports.url = void 0;
+//  Library
+const core = __importStar(__nccwpck_require__(2186));
+const metadata_1 = __nccwpck_require__(3252);
+//  ======
+//  CONFIG
+//  ======
+/** URL to take screenshot of */
+exports.url = core.getInput(metadata_1.inputs.url, { required: true });
+if (!exports.url) {
+    throw new Error('URL is required!');
+}
+/** Screenshot fileName */
+exports.path = core.getInput(metadata_1.inputs.path);
+/** Screenshot width */
+exports.width = parseInt(core.getInput(metadata_1.inputs.width));
+/** Screenshot height */
+exports.height = parseInt(core.getInput(metadata_1.inputs.height));
+/** Should take screenshot of the entire page */
+exports.captureFullPage = core.getBooleanInput(metadata_1.inputs.captureFullPage);
+/** Should capture beyond viewport */
+exports.captureBeyondViewport = core.getBooleanInput(metadata_1.inputs.captureBeyondViewport);
+/** Should omit the background */
+exports.omitBackground = core.getBooleanInput(metadata_1.inputs.omitBackground);
+/** encoding */
+exports.encoding = core.getInput(metadata_1.inputs.encoding);
+/** Boolean flag to determine if the action generates artifacts */
+exports.shouldCreateArtifacts = core.getBooleanInput(metadata_1.inputs.shouldCreateArtifacts);
+/** Time to wait before taking screenshot */
+exports.delay = +core.getInput(metadata_1.inputs.delay);
+/** Prefers Dark Color Scheme */
+exports.darkMode = core.getBooleanInput(metadata_1.inputs.darkMode);
 
 
 /***/ }),
@@ -42579,43 +42639,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 //  Library
 const core = __importStar(__nccwpck_require__(2186));
-const puppeteer_core_1 = __importDefault(__nccwpck_require__(3435));
-//  Helpers
-const helpers_1 = __nccwpck_require__(3202);
-const library_1 = __nccwpck_require__(4048);
-const captureScreenshot_1 = __nccwpck_require__(1901);
+const action_1 = __importDefault(__nccwpck_require__(7672));
 //  ====
 //  MAIN
 //  ====
-/** Web-Screenshot Action Main Function */
-function action() {
-    return __awaiter(this, void 0, void 0, function* () {
-        //  Get config parameters
-        const { width, height, shouldCreateArtifacts } = library_1.config;
-        //  Launch browser with the provided settings
-        const browser = yield puppeteer_core_1.default.launch({
-            executablePath: (0, helpers_1.getChromePath)(),
-            defaultViewport: { height, width }
-        });
-        //  Create a new browser page
-        const page = yield browser.newPage();
-        //  Capture screenshot of the given web url
-        yield (0, captureScreenshot_1.captureScreenshot)(page);
-        //  Generate artifacts
-        if (shouldCreateArtifacts) {
-            (0, library_1.createArtifacts)('screenshots', [`./${library_1.config.path}`]);
-            core.notice('📷 Screenshot artifacts created 📦');
-        }
-        //  Close the browser
-        yield browser.close();
-        core.notice('📷 Screenshots Captured ✅');
-    });
-}
 /** Main-entrypoint. Runs the GitHub Action */
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            action();
+            (0, action_1.default)();
         }
         catch (err) {
             let error = err;
@@ -42671,7 +42703,7 @@ exports.createArtifacts = createArtifacts;
 
 /***/ }),
 
-/***/ 1010:
+/***/ 5251:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -42699,38 +42731,59 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.darkMode = exports.delay = exports.shouldCreateArtifacts = exports.encoding = exports.omitBackground = exports.captureBeyondViewport = exports.captureFullPage = exports.height = exports.width = exports.path = exports.url = void 0;
+exports.captureScreenshot = void 0;
 //  Library
-const core = __importStar(__nccwpck_require__(2186));
-//  ======
-//  CONFIG
-//  ======
-/** URL to take screenshot of */
-exports.url = core.getInput('url', { required: true });
-if (!exports.url) {
-    throw new Error('URL is required!');
+const fs = __importStar(__nccwpck_require__(7561));
+const path = __importStar(__nccwpck_require__(9411));
+const io = __importStar(__nccwpck_require__(7436));
+//  Helpers
+const config = __importStar(__nccwpck_require__(6373));
+const helpers_1 = __nccwpck_require__(3202);
+/** Capture screenshot of the given URL */
+function captureScreenshot(page) {
+    return __awaiter(this, void 0, void 0, function* () {
+        //  Get options
+        const name = path.basename(config.path);
+        const type = path.extname(config.path).slice(1);
+        const { url, delay: duration, darkMode, captureFullPage: fullPage, captureBeyondViewport, encoding, omitBackground, } = config;
+        //  Navigate to the given URL
+        yield page.goto(url, {
+            waitUntil: 'networkidle2'
+        });
+        //  Enable dark-mode if needed
+        if (darkMode) {
+            page.emulateMediaFeatures([
+                { name: 'prefers-color-scheme', value: 'dark' }
+            ]);
+        }
+        //  Wait for some time before proceeding. Gives the page some breathing room to load properly
+        yield (0, helpers_1.delay)(duration);
+        //  Create sub-directory if it doesn't exist
+        if (!fs.existsSync(path.dirname(config.path))) {
+            yield io.mkdirP(path.dirname(config.path));
+        }
+        //  Take screenshot of the webpage and save it as a PNG
+        yield page.screenshot({
+            type,
+            fullPage,
+            captureBeyondViewport,
+            encoding,
+            omitBackground,
+            path: `${process.env.GITHUB_WORKSPACE}/${config.path}`,
+        });
+    });
 }
-/** Screenshot fileName */
-exports.path = core.getInput('path');
-/** Screenshot width */
-exports.width = parseInt(core.getInput('width'));
-/** Screenshot height */
-exports.height = parseInt(core.getInput('height'));
-/** Should take screenshot of the entire page */
-exports.captureFullPage = core.getBooleanInput('captureFullPage');
-/** Should capture beyond viewport */
-exports.captureBeyondViewport = core.getBooleanInput('captureBeyondViewport');
-/** Should omit the background */
-exports.omitBackground = core.getBooleanInput('omitBackground');
-/** encoding */
-exports.encoding = core.getInput('encoding');
-/** Boolean flag to determine if the action generates artifacts */
-exports.shouldCreateArtifacts = core.getBooleanInput('shouldCreateArtifacts');
-/** Time to wait before taking screenshot */
-exports.delay = +core.getInput('delay');
-/** Prefers Dark Color Scheme */
-exports.darkMode = core.getBooleanInput('darkMode');
+exports.captureScreenshot = captureScreenshot;
 
 
 /***/ }),
@@ -42754,25 +42807,45 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
 }));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.config = void 0;
-exports.config = __importStar(__nccwpck_require__(1010));
 __exportStar(__nccwpck_require__(2343), exports);
+__exportStar(__nccwpck_require__(5251), exports);
+
+
+/***/ }),
+
+/***/ 3252:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+//  ===============
+//  ACTION METADATA
+//  ===============
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.outputs = exports.inputs = void 0;
+//  ========
+//  METADATA
+//  ========
+/** Metadata inputs */
+exports.inputs = {
+    url: 'url',
+    path: 'path',
+    width: 'width',
+    height: 'height',
+    captureFullPage: 'captureFullPage',
+    captureBeyondViewport: 'captureBeyondViewport',
+    omitBackground: 'omitBackground',
+    encoding: 'encoding',
+    shouldCreateArtifacts: 'shouldCreateArtifacts',
+    delay: 'delay',
+    darkMode: 'darkMode'
+};
+/** Metadata outputs */
+exports.outputs = {};
 
 
 /***/ }),
