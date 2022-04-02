@@ -40,7 +40,7 @@ jobs:
 
       - name: Screenshot-Light
         uses: Shresht7/web-screenshot-action@main
-        id: screenshot
+        id: screenshot-light
         with:
           url: https://www.github.com/Shresht7/web-screenshot-action
           path: screenshot.png
