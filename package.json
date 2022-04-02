@@ -20,14 +20,14 @@
   },
   "homepage": "https://github.com/Shresht7/web-screenshot-action#README",
   "devDependencies": {
-    "@types/node": "^17.0.21",
+    "@types/node": "^17.0.23",
     "@vercel/ncc": "^0.33.3",
-    "typescript": "^4.6.2"
+    "typescript": "^4.6.3"
   },
   "dependencies": {
     "@actions/artifact": "^1.0.0",
     "@actions/core": "^1.6.0",
-    "@actions/io": "^1.1.1",
-    "puppeteer-core": "^13.5.0"
+    "@actions/io": "^1.1.2",
+    "puppeteer-core": "^13.5.2"
   }
 }
