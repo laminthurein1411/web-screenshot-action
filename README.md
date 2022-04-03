@@ -90,7 +90,7 @@ Intended to be used as a sub-task in some other workflow, this action's only job
 | `captureFullPage`       | Take screenshot of the entire page                                     |          `false` |          |
 | `captureBeyondViewport` | Capture beyond the viewport constraints                                |          `false` |          |
 | `omitBackground`        | Omit the background allowing for transparent images                    |          `false` |          |
-| `encoding`              | Output screenshot encoding. (`base64` | `binary` | `undefined`)        |      `undefined` |          |
+| `encoding`              | Output screenshot encoding. (`base64` / `binary` / `undefined`)        |      `undefined` |          |
 | `shouldCreateArtifacts` | Generate screenshot artifacts                                          |          `false` |          |
 | `delay`                 | Wait for duration (in milliseconds) before taking a screenshot         |           `1000` |          |
 | `darkMode`              | Enable dark mode by setting `prefers-color-scheme: dark` media feature |          `false` |          |
@@ -124,7 +124,7 @@ The [screenshot](#-web-screenshot-action) in this README is auto-generated using
 
 <br />
 
-<!-- slot: example,      prepend: ```yaml, append: ``` -->
+<!-- slot: example,       prepend: ```yaml, append: ``` -->
 ```yaml
 # ============================
 #         SCREENSHOT
