@@ -56,6 +56,9 @@ Capture screenshots of a website 📷
 
 ![Example-Screenshot](./screenshot.png)
 
+<!-- USAGE -->
+<!-- ===== -->
+
 ## 📖 Usage
 
 Use this action in a workflow step and provide the URL you want to take the screenshot of.
@@ -67,11 +70,11 @@ Use this action in a workflow step and provide the URL you want to take the scre
     url: https://github.com/Shresht7/web-screenshot-action
 ```
 
-The screenshot will be saved as `screenshot.png` by default. The file-path and type can be changed using [input parameters](#-inputs).
+The screenshot will be saved as `screenshot.png`. The file-path and type can be changed using [input parameters](#-inputs).
 
-if `shouldCreateArtifacts` is set to `true`, an [artifact](https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts) will be created with the screenshots.
+if `shouldCreateArtifacts` is set to `true`, an [artifact](https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts) will be created with the generated screenshots.
 
-Intended to be used as a sub-task in some other workflow, this action's only job is to generate the screenshots. What you do with them is up to you. See [example](#-workflow-example).
+Intended to be used as a sub-task in some other workflow, this action's only job is to generate the screenshots. What you do with them is up to you. See [example workflow](#-workflow-example).
 
 ---
 
@@ -80,7 +83,7 @@ Intended to be used as a sub-task in some other workflow, this action's only job
 <!-- slot: inputs -->
 | Input                   | Description                                                                   |          Default | Required |
 | :---------------------- | :---------------------------------------------------------------------------- | ---------------: | :------: |
-| `url`                   | URL to take the screenshot of                                                 |      `undefined` |     ✅    |
+| `url`                   | URL to take the screenshot of                                                 |      `undefined` |    ✅     |
 | `path`                  | Screenshot file-path                                                          | `screenshot.png` |          |
 | `width`                 | Viewport width                                                                |           `1920` |          |
 | `height`                | Viewport height                                                               |           `1080` |          |
