@@ -42387,7 +42387,6 @@ const puppeteer_core_1 = __importDefault(__nccwpck_require__(3435));
 const config = __importStar(__nccwpck_require__(6373));
 const helpers_1 = __nccwpck_require__(3202);
 const library_1 = __nccwpck_require__(4048);
-const library_2 = __nccwpck_require__(4048);
 /** Web-Screenshot Action Main Function */
 function action() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -42401,7 +42400,7 @@ function action() {
         //  Create a new browser page
         const page = yield browser.newPage();
         //  Capture screenshot of the given web url
-        yield (0, library_2.captureScreenshot)(page);
+        yield (0, library_1.captureScreenshot)(page);
         //  Generate artifacts
         if (shouldCreateArtifacts) {
             (0, library_1.createArtifacts)('screenshots', [`./${config.path}`]);
@@ -42755,19 +42754,18 @@ function captureScreenshot(page) {
         //  Get options
         const name = path.basename(config.path);
         const type = path.extname(config.path).slice(1);
-        const { url, delay: duration, darkMode, captureFullPage: fullPage, captureBeyondViewport, encoding, omitBackground, } = config;
         //  Navigate to the given URL
-        yield page.goto(url, {
+        yield page.goto(config.url, {
             waitUntil: 'networkidle2'
         });
         //  Enable dark-mode if needed
-        if (darkMode) {
+        if (config.darkMode) {
             page.emulateMediaFeatures([
                 { name: 'prefers-color-scheme', value: 'dark' }
             ]);
         }
         //  Wait for some time before proceeding. Gives the page some breathing room to load properly
-        yield (0, helpers_1.delay)(duration);
+        yield (0, helpers_1.delay)(config.delay);
         //  Create sub-directory if it doesn't exist
         if (!fs.existsSync(path.dirname(config.path))) {
             yield io.mkdirP(path.dirname(config.path));
@@ -42775,11 +42773,11 @@ function captureScreenshot(page) {
         //  Take screenshot of the webpage and save it as a PNG
         yield page.screenshot({
             type,
-            fullPage,
-            captureBeyondViewport,
-            encoding,
-            omitBackground,
-            path: `${process.env.GITHUB_WORKSPACE}/${config.path}`,
+            fullPage: config.captureFullPage,
+            captureBeyondViewport: config.captureBeyondViewport,
+            encoding: config.encoding,
+            omitBackground: config.omitBackground,
+            path: config.path,
         });
     });
 }
@@ -42827,9 +42825,6 @@ __exportStar(__nccwpck_require__(5251), exports);
 //  ===============
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.outputs = exports.inputs = void 0;
-//  ========
-//  METADATA
-//  ========
 /** Metadata inputs */
 exports.inputs = {
     url: 'url',
