@@ -81,19 +81,19 @@ Intended to be used as a sub-task in some other workflow, this action's only job
 ## 📋 Inputs
 
 <!-- slot: inputs -->
-| Input                   | Description                                                                   |          Default | Required |
-| :---------------------- | :---------------------------------------------------------------------------- | ---------------: | :------: |
-| `url`                   | URL to take the screenshot of                                                 |      `undefined` |    ✅     |
-| `path`                  | Screenshot file-path                                                          | `screenshot.png` |          |
-| `width`                 | Viewport width                                                                |           `1920` |          |
-| `height`                | Viewport height                                                               |           `1080` |          |
-| `captureFullPage`       | Should take screenshot of the entire page                                     |          `false` |          |
-| `captureBeyondViewport` | Should capture beyond the viewport                                            |          `false` |          |
-| `omitBackground`        | Should omit the background allowing for transparent images                    |          `false` |          |
-| `encoding`              | Output encoding                                                               |      `undefined` |          |
-| `shouldCreateArtifacts` | Should generate screenshot artifacts                                          |          `false` |          |
-| `delay`                 | Should wait for x milliseconds before taking a screenshot                     |           `1000` |          |
-| `darkMode`              | Should enable dark mode by setting `prefers-color-scheme: dark` media feature |          `false` |          |
+| Input                   | Description                                                            |          Default | Required |
+| :---------------------- | :--------------------------------------------------------------------- | ---------------: | :------: |
+| `url`                   | URL to take the screenshot of                                          |      `undefined` |     ✅    |
+| `path`                  | Save screenshot as                                                     | `screenshot.png` |          |
+| `width`                 | Viewport width                                                         |           `1920` |          |
+| `height`                | Viewport height                                                        |           `1080` |          |
+| `captureFullPage`       | Take screenshot of the entire page                                     |          `false` |          |
+| `captureBeyondViewport` | Capture beyond the viewport constraints                                |          `false` |          |
+| `omitBackground`        | Omit the background allowing for transparent images                    |          `false` |          |
+| `encoding`              | Output screenshot encoding. (`base64` | `binary` | `undefined`)        |      `undefined` |          |
+| `shouldCreateArtifacts` | Generate screenshot artifacts                                          |          `false` |          |
+| `delay`                 | Wait for duration (in milliseconds) before taking a screenshot         |           `1000` |          |
+| `darkMode`              | Enable dark mode by setting `prefers-color-scheme: dark` media feature |          `false` |          |
 <!-- /slot -->
 
 ## 📋 Outputs
@@ -124,7 +124,7 @@ The [screenshot](#-web-screenshot-action) in this README is auto-generated using
 
 <br />
 
-<!-- slot: example,     prepend: ```yaml, append: ``` -->
+<!-- slot: example,      prepend: ```yaml, append: ``` -->
 ```yaml
 # ============================
 #         SCREENSHOT
@@ -164,14 +164,14 @@ jobs:
         id: screenshot
         with:
           url: https://www.github.com/Shresht7/web-screenshot-action
-          path: screenshots/screenshot-light.png
+          path: screenshot.png
 
       - name: Screenshot-Light
         uses: Shresht7/web-screenshot-action@v1
         id: screenshot-light
         with:
           url: https://www.github.com/Shresht7/web-screenshot-action
-          path: screenshot.png
+          path: screenshots/screenshot-light.png
 
       - name: Screenshot-Dark
         uses: Shresht7/web-screenshot-action@v1
