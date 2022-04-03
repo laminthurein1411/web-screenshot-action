@@ -1,7 +1,7 @@
 {
   "name": "web-screenshot-action",
   "version": "1.0.0",
-  "description": "GitHub Action to take screenshots of a website",
+  "description": "Capture screenshots of a website 📷",
   "main": "dist/index.js",
   "scripts": {
     "dev": "ncc build src/index.ts --source-map --license licenses.txt",

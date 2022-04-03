@@ -2,17 +2,17 @@
 # WEB SCREENSHOT
 # ==============
 
-name: "Web Screenshot Action"
-description: "Capture screenshots of a website 📷"
-author: "Shresht7"
+name: Web-Screenshot-Action
+description: Capture screenshots of a website 📷
+author: Shresht7
 
 branding:
   icon: camera
   color: yellow
 
 runs:
-  using: "node16"
-  main: "dist/index.js"
+  using: node16
+  main: dist/index.js
 
 # Inputs
 # ======
@@ -22,24 +22,24 @@ inputs:
   # ----------------------
 
   url:
-    description: "URL to take the screenshot of"
+    description: URL to take the screenshot of
     required: true
 
   path:
-    description: "Screenshot file-path"
-    default: "screenshot.png"
+    description: Save screenshot as
+    default: screenshot.png
     required: false
 
   # Image Dimensions
   # ----------------
 
   width:
-    description: "Viewport width"
+    description: Viewport width
     default: "1920"
     required: false
 
   height:
-    description: "Viewport height"
+    description: Viewport height
     default: "1080"
     required: false
 
@@ -47,39 +47,39 @@ inputs:
   # ------------------
 
   captureFullPage:
-    description: "Should take screenshot of the entire page"
+    description: Take screenshot of the entire page
     default: "false"
     required: false
 
   captureBeyondViewport:
-    description: "Should capture beyond the viewport"
+    description: Capture beyond the viewport constraints
     default: "false"
     required: false
 
   omitBackground:
-    description: "Should omit the background allowing for transparent images"
+    description: Omit the background allowing for transparent images
     default: "false"
     required: false
 
   # base64 | binary | undefined
   encoding:
-    description: "Output encoding"
+    description: Output screenshot encoding. (`base64` | `binary` | `undefined`)
     required: false
 
   # Miscellaneous
   # -------------
 
   shouldCreateArtifacts:
-    description: "Should generate screenshot artifacts"
+    description: Generate screenshot artifacts
     default: "false"
     required: false
 
   delay:
-    description: "Should wait for x milliseconds before taking a screenshot"
+    description: Wait for duration (in milliseconds) before taking a screenshot
     default: "1000"
     required: false
 
   darkMode:
-    description: "Should enable dark mode by setting `prefers-color-scheme: dark` media feature"
+    description: "Enable dark mode by setting `prefers-color-scheme: dark` media feature"
     default: "false"
     required: false
