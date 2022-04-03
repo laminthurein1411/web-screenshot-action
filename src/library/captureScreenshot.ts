@@ -16,30 +16,21 @@ export async function captureScreenshot(page: Page) {
     //  Get options
     const name = path.basename(config.path)
     const type = path.extname(config.path).slice(1) as ScreenshotOptions['type']
-    const {
-        url,
-        delay: duration,
-        darkMode,
-        captureFullPage: fullPage,
-        captureBeyondViewport,
-        encoding,
-        omitBackground,
-    } = config
 
     //  Navigate to the given URL
-    await page.goto(url, {
+    await page.goto(config.url, {
         waitUntil: 'networkidle2'
     })
 
     //  Enable dark-mode if needed
-    if (darkMode) {
+    if (config.darkMode) {
         page.emulateMediaFeatures([
             { name: 'prefers-color-scheme', value: 'dark' }
         ])
     }
 
     //  Wait for some time before proceeding. Gives the page some breathing room to load properly
-    await delay(duration)
+    await delay(config.delay)
 
     //  Create sub-directory if it doesn't exist
     if (!fs.existsSync(path.dirname(config.path))) {
@@ -49,11 +40,11 @@ export async function captureScreenshot(page: Page) {
     //  Take screenshot of the webpage and save it as a PNG
     await page.screenshot({
         type,
-        fullPage,
-        captureBeyondViewport,
-        encoding,
-        omitBackground,
-        path: `${process.env.GITHUB_WORKSPACE}/${config.path}`,
+        fullPage: config.captureFullPage,
+        captureBeyondViewport: config.captureBeyondViewport,
+        encoding: config.encoding,
+        omitBackground: config.omitBackground,
+        path: config.path,
     })
 
 }

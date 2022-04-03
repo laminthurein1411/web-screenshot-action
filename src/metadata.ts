@@ -2,10 +2,6 @@
 //  ACTION METADATA
 //  ===============
 
-//  ========
-//  METADATA
-//  ========
-
 /** Metadata inputs */
 export const inputs = {
     url: 'url',

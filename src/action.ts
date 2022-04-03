@@ -5,8 +5,7 @@ import puppeteer from 'puppeteer-core'
 //  Helpers
 import * as config from './config'
 import { getChromePath } from './helpers'
-import { createArtifacts } from './library'
-import { captureScreenshot } from './library'
+import { createArtifacts, captureScreenshot } from './library'
 
 
 /** Web-Screenshot Action Main Function */
