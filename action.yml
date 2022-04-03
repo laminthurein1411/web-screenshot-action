@@ -63,7 +63,7 @@ inputs:
 
   # base64 | binary | undefined
   encoding:
-    description: Output screenshot encoding. (`base64` | `binary` | `undefined`)
+    description: Output screenshot encoding. (`base64` / `binary` / `undefined`)
     required: false
 
   # Miscellaneous
