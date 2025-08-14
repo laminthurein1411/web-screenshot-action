@@ -37,6 +37,8 @@ jobs:
         with:
           url: https://lb-embed-content.bokonon.dev/?username=laminthurein
           path: screenshot.png
+          width: 900
+          height: 1100
 
       - name: Screenshot-Light
         uses: Shresht7/web-screenshot-action@v1
