@@ -61,9 +61,9 @@ jobs:
         id: git-diff
         run: |
           if git diff --exit-code; then
-          echo "::set-output name=changes_exist::false"
+          echo "changes_exist::false" 
           else
-          echo "::set-output name=changes_exist::true"
+          echo "changes_exist::true" 
           fi
 
       - name: add, commit and push
