@@ -124,7 +124,7 @@ The [screenshot](#-web-screenshot-action) in this README is auto-generated using
 
 <br />
 
-<!-- slot: example,          prepend: ```yaml, append: ``` -->
+<!-- slot: example,           prepend: ```yaml, append: ``` -->
 ```yaml
 # ============================
 #         SCREENSHOT
@@ -165,7 +165,7 @@ jobs:
         with:
           url: https://lb-embed-content.bokonon.dev/?username=laminthurein
           path: screenshot.png
-          width: 800vw
+          width: 800
           height: 100vh
           
       - name: Screenshot-Light
@@ -174,8 +174,9 @@ jobs:
         with:
           url: https://lb-embed-content.bokonon.dev/?username=laminthurein
           path: screenshots/screenshot-light.png
-          width: 800
-          height: 100
+          width: 100%
+          height: 1000
+          captureFullPage: true
 
       - name: Screenshot-Dark
         uses: Shresht7/web-screenshot-action@v1
