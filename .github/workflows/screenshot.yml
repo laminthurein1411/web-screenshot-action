@@ -35,21 +35,21 @@ jobs:
         uses: Shresht7/web-screenshot-action@v1
         id: screenshot
         with:
-          url: https://www.github.com/Shresht7/web-screenshot-action
+          url: https://lb-embed-content.bokonon.dev/?username=laminthurein
           path: screenshot.png
 
       - name: Screenshot-Light
         uses: Shresht7/web-screenshot-action@v1
         id: screenshot-light
         with:
-          url: https://www.github.com/Shresht7/web-screenshot-action
+          url: https://lb-embed-content.bokonon.dev/?username=laminthurein
           path: screenshots/screenshot-light.png
 
       - name: Screenshot-Dark
         uses: Shresht7/web-screenshot-action@v1
         id: screenshot-dark
         with:
-          url: https://www.github.com/Shresht7/web-screenshot-action
+          url: https://lb-embed-content.bokonon.dev/?username=laminthurein
           path: screenshots/screenshot-dark.png
           darkMode: true
 
