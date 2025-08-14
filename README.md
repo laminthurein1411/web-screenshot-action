@@ -124,7 +124,7 @@ The [screenshot](#-web-screenshot-action) in this README is auto-generated using
 
 <br />
 
-<!-- slot: example,       prepend: ```yaml, append: ``` -->
+<!-- slot: example,        prepend: ```yaml, append: ``` -->
 ```yaml
 # ============================
 #         SCREENSHOT
@@ -163,21 +163,21 @@ jobs:
         uses: Shresht7/web-screenshot-action@v1
         id: screenshot
         with:
-          url: https://www.github.com/Shresht7/web-screenshot-action
+          url: https://lb-embed-content.bokonon.dev/?username=laminthurein
           path: screenshot.png
 
       - name: Screenshot-Light
         uses: Shresht7/web-screenshot-action@v1
         id: screenshot-light
         with:
-          url: https://www.github.com/Shresht7/web-screenshot-action
+          url: https://lb-embed-content.bokonon.dev/?username=laminthurein
           path: screenshots/screenshot-light.png
 
       - name: Screenshot-Dark
         uses: Shresht7/web-screenshot-action@v1
         id: screenshot-dark
         with:
-          url: https://www.github.com/Shresht7/web-screenshot-action
+          url: https://lb-embed-content.bokonon.dev/?username=laminthurein
           path: screenshots/screenshot-dark.png
           darkMode: true
 
@@ -189,9 +189,9 @@ jobs:
         id: git-diff
         run: |
           if git diff --exit-code; then
-          echo "::set-output name=changes_exist::false"
+          echo "changes_exist::false" 
           else
-          echo "::set-output name=changes_exist::true"
+          echo "changes_exist::true" 
           fi
 
       - name: add, commit and push
